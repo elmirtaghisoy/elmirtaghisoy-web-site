@@ -1,8 +1,11 @@
 package az.elmirtaghisoywebsite.component.model;
 
-import java.io.Serializable;
+import lombok.Getter;
+import lombok.Setter;
 
-public class ValidationError implements Serializable {
+@Getter
+@Setter
+public class ValidationError {
 
     public ValidationError() {
     }

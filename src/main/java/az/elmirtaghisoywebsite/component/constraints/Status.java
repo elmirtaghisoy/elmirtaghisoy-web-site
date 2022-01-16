@@ -15,8 +15,9 @@ public enum Status {
     CREATE(1003, "standard.create-operation"),
     UPDATE(1004, "standard.update-operation"),
     DELETE(1005, "standard.delete-operation"),
-    VALIDATION_ERROR(1002, "standard.validation-error"),
-    DATA_NOT_FOUND(1003, "standard.data-not-found");
+    VALIDATION_ERROR(1006, "standard.validation-error"),
+    DATA_NOT_FOUND(1007, "standard.data-not-found"),
+    UNKNOWN_ERROR(1008, "standard.unknown-error");
 
     private final int code;
     private final String message;
