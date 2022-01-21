@@ -7,6 +7,7 @@ plugins {
 
 group = 'az'
 version = '0.0.1'
+archivesBaseName = 'et-website'
 sourceCompatibility = '11'
 
 configurations {
