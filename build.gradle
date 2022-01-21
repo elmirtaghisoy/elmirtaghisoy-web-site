@@ -32,6 +32,9 @@ dependencies {
     annotationProcessor group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.4.2.Final'
 
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+
+    implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '5.2'
+
 }
 
 //checkstyle {

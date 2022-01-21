@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property scope="context" name="LOG_PATH" value="/var/logs/et-website"/>
+    <include resource="logback/appender-console.xml"/>
+    <include resource="logback/appender-file.xml"/>
+
+    <springProfile name="local">
+        <include resource="org/springframework/boot/logging/logback/base.xml"/>
+        <root level="trace"/>
+    </springProfile>
+
+    <springProfile name="develop">
+        <root level="info">
+            <appender-ref ref="APPENDER-CONSOLE"/>
+            <appender-ref ref="APPENDER-FILE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="master">
+        <root level="info">
+            <appender-ref ref="APPENDER-CONSOLE"/>
+            <appender-ref ref="APPENDER-FILE"/>
+        </root>
+    </springProfile>
+
+</configuration>

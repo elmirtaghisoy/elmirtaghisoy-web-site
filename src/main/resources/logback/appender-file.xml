@@ -1,0 +1,20 @@
+<included>
+    <appender name="APPENDER-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/app.log</file>
+
+        <rollingPolicy name="ROLLING-POLICY" class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <maxFileSize>10MB</maxFileSize>
+            <fileNamePattern>
+                ${LOG_PATH}/archived/app_%d{dd-MM-yyyy}_%i.log
+            </fileNamePattern>
+            <maxHistory>100</maxHistory>
+            <totalSizeCap>10000MB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+                %d{dd-MM-yyyy HH:mm:ss.SSS} %yellow([%thread]) %highlight(%-5level) %logger{40}.%M - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+</included>
