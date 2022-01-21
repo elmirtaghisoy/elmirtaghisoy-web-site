@@ -12,9 +12,7 @@
         </rollingPolicy>
 
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>
-                %d{dd-MM-yyyy HH:mm:ss.SSS} %yellow([%thread]) %highlight(%-5level) %logger{40}.%M - %msg%n
-            </pattern>
+            <pattern><![CDATA[%date{HH:mm:ss.SSS} [%thread] %-5level %logger{15} msgId=%mdc{msgId:-} %msg%n]]></pattern>
         </encoder>
     </appender>
 </included>

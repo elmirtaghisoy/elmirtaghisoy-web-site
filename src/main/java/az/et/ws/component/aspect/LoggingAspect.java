@@ -28,10 +28,8 @@ public class LoggingAspect {
 
     @Before("services()")
     public void beforeExecuting(JoinPoint joinPoint) {
-        log.info("#########################");
-        log.info("#########################");
-        log.info("###### Starting\t: {} ", joinPoint.getSignature().getName());
-        log.info("****** Request\t\t: {}", Arrays.toString(joinPoint.getArgs()));
+        log.info("###### Starting: {} ", joinPoint.getSignature().getName());
+        log.info("****** Request: {}", Arrays.toString(joinPoint.getArgs()));
     }
 
     @AfterReturning(value = "services()", returning = "response")
@@ -41,19 +39,16 @@ public class LoggingAspect {
 
     @AfterThrowing("services()")
     public void afterThrowingError(JoinPoint joinPoint) {
-        log.warn("****** Response\t: {}", "Error occur in " + joinPoint.getSignature().getName());
+        log.error("****** Response: {}", "Error occur in " + joinPoint.getSignature().getName());
     }
 
     @After("services()")
     public void afterExecuting(JoinPoint joinPoint) {
-        log.info("###### Ending\t\t: {} ", joinPoint.getSignature().getName());
-        log.info("#########################");
+        log.info("###### Ending: {} ", joinPoint.getSignature().getName());
     }
 
     @AfterReturning(value = "exceptions()", returning = "response")
     public void afterReturningError(Object response) {
-        log.warn("****** Error Response\t: {}", response.toString());
-        log.info("#########################");
-        log.info("#########################");
+        log.error("****** Error Response: {}", response.toString());
     }
 }
