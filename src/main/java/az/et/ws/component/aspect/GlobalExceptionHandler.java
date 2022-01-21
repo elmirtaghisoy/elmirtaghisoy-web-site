@@ -27,7 +27,10 @@ public class GlobalExceptionHandler {
     public ErrorResponse<List<ValidationError>> handleFieldValidation(ConstraintViolationException exception) {
         List<ValidationError> violations = exception.getConstraintViolations()
                 .stream()
-                .map(violation -> new ValidationError(violation.getPropertyPath().toString(), Translator.toLocale(violation.getMessage())))
+                .map(violation -> new ValidationError(
+                        violation.getPropertyPath().toString(),
+                        Translator.toLocale(violation.getMessage()))
+                )
                 .collect(Collectors.toList());
         return ErrorResponse.error(violations, Status.VALIDATION_ERROR, ExceptionUtils.getStackTrace(exception));
     }

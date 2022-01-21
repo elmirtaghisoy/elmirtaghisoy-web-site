@@ -19,39 +19,39 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class BlogApi {
 
     private final BlogService blogService;
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value = "/blog/create")
+    @PostMapping("/blog/create")
     public SuccessResponse<PostResponse> createTraining(@RequestBody PostRequest request) {
         return SuccessResponse.create(blogService.createBlog(request));
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/blog/all")
+    @GetMapping("/blog/all")
     public SuccessResponse<List<PostResponse>> getAllTraining() {
         return SuccessResponse.fetch(blogService.getAllBlog());
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/blog/{id}")
-    public SuccessResponse<PostResponse> getTrainingById(@PathVariable(value = "id") Long blogId) {
+    @GetMapping("/blog/{id}")
+    public SuccessResponse<PostResponse> getTrainingById(@PathVariable("id") Long blogId) {
         return SuccessResponse.fetch(blogService.getBlogById(blogId));
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping(value = "/blog/update")
+    @PutMapping("/blog/update")
     public SuccessResponse<PostResponse> updateBlog(@RequestBody PostRequest request) {
         return SuccessResponse.update(blogService.updateBlog(request));
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping(value = "/blog/{id}/delete")
-    public SuccessResponse<PostResponse> deleteBlogById(@PathVariable(value = "id") Long blogId) {
+    @DeleteMapping("/blog/{id}/delete")
+    public SuccessResponse<PostResponse> deleteBlogById(@PathVariable("id") Long blogId) {
         blogService.deleteBlogById(blogId);
         return SuccessResponse.delete();
     }

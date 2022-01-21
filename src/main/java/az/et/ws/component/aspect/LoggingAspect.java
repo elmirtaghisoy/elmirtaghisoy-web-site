@@ -26,7 +26,7 @@ public class LoggingAspect {
 
     }
 
-    @Before(value = "services()")
+    @Before("services()")
     public void beforeExecuting(JoinPoint joinPoint) {
         log.info("#########################");
         log.info("#########################");
@@ -39,12 +39,12 @@ public class LoggingAspect {
         log.info("****** Response\t: {}", response.toString());
     }
 
-    @AfterThrowing(value = "services()")
+    @AfterThrowing("services()")
     public void afterThrowingError(JoinPoint joinPoint) {
         log.warn("****** Response\t: {}", "Error occur in " + joinPoint.getSignature().getName());
     }
 
-    @After(value = "services()")
+    @After("services()")
     public void afterExecuting(JoinPoint joinPoint) {
         log.info("###### Ending\t\t: {} ", joinPoint.getSignature().getName());
         log.info("#########################");

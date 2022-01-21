@@ -8,8 +8,8 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface ObjectMapper {
 
-    PostEntity R2E(PostRequest request);
+    PostEntity r2e(PostRequest request);
 
-    PostResponse E2R(PostEntity entity);
+    PostResponse e2r(PostEntity entity);
 
 }

@@ -19,24 +19,24 @@ public class BlogService {
     private final ObjectMapper objectMapper;
 
     public PostResponse createBlog(PostRequest request) {
-        return objectMapper.E2R(postRepository.save(objectMapper.R2E(request)));
+        return objectMapper.e2r(postRepository.save(objectMapper.r2e(request)));
     }
 
     public List<PostResponse> getAllBlog() {
         return postRepository
                 .findAll()
                 .stream()
-                .map(objectMapper::E2R)
+                .map(objectMapper::e2r)
                 .collect(Collectors.toList());
     }
 
     public PostResponse getBlogById(Long blogId) {
-        return objectMapper.E2R(postRepository.getById(blogId));
+        return objectMapper.e2r(postRepository.getById(blogId));
     }
 
     public PostResponse updateBlog(PostRequest request) {
         if (blogIsExist(request.getId())) {
-            return objectMapper.E2R(postRepository.save(objectMapper.R2E(request)));
+            return objectMapper.e2r(postRepository.save(objectMapper.r2e(request)));
         } else {
             throw new EntityNotFoundException();
         }
