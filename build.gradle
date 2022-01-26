@@ -41,3 +41,7 @@ checkstyle {
     configFile = file("${rootProject.projectDir}/qa/checkstyle.xml")
     ignoreFailures = false
 }
+
+test {
+    useJUnitPlatform()
+}

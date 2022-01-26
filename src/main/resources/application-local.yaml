@@ -1,13 +1,13 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/etwebsite
-    username: user_et
-    password: user_et
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
 
   jpa:
     hibernate:
       ddl-auto: validate
+    properties.hibernate.dialect: org.hibernate.dialect.MySQLDialect
 
 server:
-  port: 8080
+  port: 8081

@@ -3,11 +3,6 @@ spring:
     url: jdbc:mysql://localhost:3306/etwebsite
     username: user_et
     password: user_et
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: validate
 
 server:
-  port: 8080
+  port: 8081
