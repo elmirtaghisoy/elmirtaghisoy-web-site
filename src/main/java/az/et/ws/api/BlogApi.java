@@ -56,4 +56,10 @@ public class BlogApi {
         return SuccessResponse.delete();
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/ping")
+    public SuccessResponse<String> ping() {
+        return SuccessResponse.fetch("Service is work");
+    }
+
 }

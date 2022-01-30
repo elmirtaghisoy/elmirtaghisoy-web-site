@@ -1,6 +1,8 @@
 package az.et.ws.component.mapper;
 
+import az.et.ws.component.entity.AppUserEntity;
 import az.et.ws.component.entity.PostEntity;
+import az.et.ws.component.model.AppUserDetails;
 import az.et.ws.component.request.PostRequest;
 import az.et.ws.component.response.PostResponse;
 import org.mapstruct.Mapper;
@@ -11,5 +13,7 @@ public interface ObjectMapper {
     PostEntity r2e(PostRequest request);
 
     PostResponse e2r(PostEntity entity);
+
+    AppUserDetails appUserToAppUserDetails(AppUserEntity appUser);
 
 }

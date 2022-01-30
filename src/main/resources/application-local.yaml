@@ -3,11 +3,9 @@ spring:
     url: jdbc:mysql://localhost:3306/etwebsite
     username: root
     password: root
-
   jpa:
     hibernate:
       ddl-auto: validate
-    properties.hibernate.dialect: org.hibernate.dialect.MySQLDialect
 
 server:
   port: 8081
