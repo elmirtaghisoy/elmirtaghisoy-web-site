@@ -15,7 +15,7 @@ import java.util.Collection;
 @Getter
 @Setter
 @ToString
-public class AppUserDetails implements UserDetails {
+public class AppUser implements UserDetails {
 
     private final Long id;
     private final String username;

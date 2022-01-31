@@ -14,39 +14,35 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import java.util.Collection;
-import java.util.List;
 
 @Entity
-@Table(name = "app_user")
+@Table(name = "app_role")
 @ToString
 @Getter
 @Setter
-public class AppUserEntity {
+public class AppRoleEntity {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "user.field.username")
-    @Column(name = "username")
-    private String username;
+    @Column(name = "name")
+    private String name;
 
-    @NotBlank(message = "user.field.password")
-    @Column(name = "password")
-    private String password;
+    @Column(name = "active")
+    private boolean isActive;
 
-    @NotBlank(message = "user.field.email")
-    @Column(name = "email")
-    private String email;
+    @ManyToMany(mappedBy = "roles")
+    private Collection<AppUserEntity> users;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+            name = "roles_permissions",
+            joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id")
     )
-    private List<AppRoleEntity> roles;
+    private Collection<AppPermissionEntity> permissions;
+
 }
