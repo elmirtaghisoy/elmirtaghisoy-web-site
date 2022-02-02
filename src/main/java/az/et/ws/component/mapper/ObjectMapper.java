@@ -26,7 +26,6 @@ public abstract class ObjectMapper {
                 .username(entity.getUsername())
                 .authorities(getAuthorities(entity))
                 .build();
-        System.err.println(userDetails);
         return userDetails;
     }
 
