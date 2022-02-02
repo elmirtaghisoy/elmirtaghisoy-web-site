@@ -6,6 +6,7 @@ import az.et.ws.component.response.SuccessResponse;
 import az.et.ws.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ public class BlogApi {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/blog/all")
+    @PreAuthorize("hasAnyAuthority('BLOG')")
     public SuccessResponse<List<PostResponse>> getAllTraining() {
         return SuccessResponse.fetch(blogService.getAllBlog());
     }
