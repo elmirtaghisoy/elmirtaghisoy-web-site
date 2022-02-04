@@ -1,14 +1,16 @@
 package az.et.ws.component.aspect;
 
 
-import az.et.ws.component.exception.BadLoginRequestException;
 import az.et.ws.component.model.ValidationError;
 import az.et.ws.component.response.ErrorResponse;
 import az.et.ws.util.Translator;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -18,8 +20,9 @@ import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static az.et.ws.component.constraints.Status.BAD_LOGIN_REQUEST;
+import static az.et.ws.component.constraints.Status.ACCESS_DENIED;
 import static az.et.ws.component.constraints.Status.DATA_NOT_FOUND;
+import static az.et.ws.component.constraints.Status.INVALID_TOKEN;
 import static az.et.ws.component.constraints.Status.UNKNOWN_ERROR;
 import static az.et.ws.component.constraints.Status.VALIDATION_ERROR;
 
@@ -52,4 +55,15 @@ public class GlobalExceptionHandler {
         return ErrorResponse.error(UNKNOWN_ERROR, ExceptionUtils.getStackTrace(throwable));
     }
 
+    @ExceptionHandler(AccessDeniedException.class)
+    public ErrorResponse<String> accessDeniedException(AccessDeniedException exception) {
+        return ErrorResponse.error(ACCESS_DENIED, ExceptionUtils.getStackTrace(exception));
+    }
+
+    @ExceptionHandler(JWTVerificationException.class)
+    public ErrorResponse<String> notValidJwt(JWTVerificationException exception) {
+        return ErrorResponse.error(INVALID_TOKEN, ExceptionUtils.getStackTrace(exception));
+    }
+
 }
+

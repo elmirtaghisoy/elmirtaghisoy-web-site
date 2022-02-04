@@ -38,7 +38,7 @@ public class JWTUtil {
     protected static String accessToken(UserDetails user) {
         return JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 1000))
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(Algorithm.HMAC256("secret".getBytes()));
     }
@@ -64,11 +64,12 @@ public class JWTUtil {
         );
     }
 
-    protected static void buildErrorResponse(HttpServletResponse httpServletResponse) throws IOException {
+    protected static void buildErrorResponse(HttpServletResponse httpServletResponse,Status status) throws IOException {
         httpServletResponse.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(
                 httpServletResponse.getOutputStream(),
-                ErrorResponse.error(Status.WRONG_USERNAME_OR_PASSWORD)
+                ErrorResponse.error(status)
         );
     }
+
 }

@@ -18,7 +18,10 @@ public enum Status {
     VALIDATION_ERROR(1006, "standard.validation-error"),
     DATA_NOT_FOUND(1007, "standard.data-not-found"),
     WRONG_USERNAME_OR_PASSWORD(1008, "standard.wrong-username-or-password"),
-    BAD_LOGIN_REQUEST(1008, "standard.bad-login-request"),
+    BAD_LOGIN_REQUEST(1009, "standard.bad-login-request"),
+    ACCESS_DENIED(1009, "standard.access-denied"),
+    INVALID_TOKEN(1010, "standard.invalid-token"),
+    EXPIRED_TOKEN(1011, "standard.expired-token"),
     UNKNOWN_ERROR(2000, "standard.unknown-error");
 
     private final int code;

@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static az.et.ws.component.constraints.Status.WRONG_USERNAME_OR_PASSWORD;
+
 @RequiredArgsConstructor
 public class CAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -31,7 +33,7 @@ public class CAuthenticationFilter extends UsernamePasswordAuthenticationFilter 
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException authenticationException) throws IOException {
-        JWTUtil.buildErrorResponse(response);
+        JWTUtil.buildErrorResponse(response, WRONG_USERNAME_OR_PASSWORD);
     }
 
     @Override
