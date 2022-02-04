@@ -1,7 +1,10 @@
 package az.et.ws.component.response;
 
 import az.et.ws.component.constraints.Status;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,6 +15,8 @@ public class SuccessResponse<R> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private R response;
     private Status status;
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime timestamp;
 
     public static <R> SuccessResponse<R> fetch(R data) {

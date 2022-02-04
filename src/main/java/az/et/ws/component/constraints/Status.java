@@ -17,7 +17,9 @@ public enum Status {
     DELETE(1005, "standard.delete-operation"),
     VALIDATION_ERROR(1006, "standard.validation-error"),
     DATA_NOT_FOUND(1007, "standard.data-not-found"),
-    UNKNOWN_ERROR(1008, "standard.unknown-error");
+    WRONG_USERNAME_OR_PASSWORD(1008, "standard.wrong-username-or-password"),
+    BAD_LOGIN_REQUEST(1008, "standard.bad-login-request"),
+    UNKNOWN_ERROR(2000, "standard.unknown-error");
 
     private final int code;
     private final String message;

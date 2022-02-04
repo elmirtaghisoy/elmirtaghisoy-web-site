@@ -9,4 +9,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticationApi {
 
+//    private final AppUserService appUserService;
+
+//    @PostMapping("/login")
+//    public SuccessResponse<AuthResponse> login(@RequestBody LoginRequest request) {
+//        return SuccessResponse.create(appUserService.login(request));
+//    }
+//
+//    @PostMapping("/refresh-token")
+//    public SuccessResponse<AuthResponse> refreshToken(@RequestBody RefreshTokeRequest request) {
+//        return SuccessResponse.update(appUserService.refreshToken(request));
+//    }
+
 }

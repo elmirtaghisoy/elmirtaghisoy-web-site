@@ -4,7 +4,7 @@
     <property scope="context" name="LOG_PATH" value="/var/logs/et-website"/>
     <include resource="logback/appender-console.xml"/>
     <include resource="logback/appender-file.xml"/>
-<!--    <include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
     <springProfile name="local">
         <root level="info">

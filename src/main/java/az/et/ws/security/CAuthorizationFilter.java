@@ -26,7 +26,7 @@ public class CAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getServletPath().equals("/login")) {
+        if (request.getServletPath().equals("/login") || request.getServletPath().equals("/api/v1/refresh-token/**")) {
             filterChain.doFilter(request, response);
         } else {
             String authorizationHeader = request.getHeader(AUTHORIZATION);
