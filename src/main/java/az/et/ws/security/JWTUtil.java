@@ -9,7 +9,7 @@ import az.et.ws.component.request.LoginRequest;
 import az.et.ws.component.response.AuthResponse;
 import az.et.ws.component.response.ErrorResponse;
 import az.et.ws.component.response.SuccessResponse;
-import az.et.ws.repository.TokenRepository;
+import az.et.ws.repository.redis.TokenRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;

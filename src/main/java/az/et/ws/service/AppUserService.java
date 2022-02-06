@@ -2,7 +2,7 @@ package az.et.ws.service;
 
 import az.et.ws.component.mapper.ObjectMapper;
 import az.et.ws.component.model.AppUser;
-import az.et.ws.repository.AppUserRepository;
+import az.et.ws.repository.postgres.AppUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;

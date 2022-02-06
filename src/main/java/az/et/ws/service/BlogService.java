@@ -3,7 +3,7 @@ package az.et.ws.service;
 import az.et.ws.component.mapper.ObjectMapper;
 import az.et.ws.component.request.PostRequest;
 import az.et.ws.component.response.PostResponse;
-import az.et.ws.repository.PostRepository;
+import az.et.ws.repository.postgres.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

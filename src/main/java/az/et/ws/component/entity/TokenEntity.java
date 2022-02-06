@@ -1,35 +1,42 @@
 package az.et.ws.component.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "user_token")
-@Getter
-@Setter
+import static az.et.ws.component.entity.TokenEntity.HASH_NAME;
+import static az.et.ws.component.entity.TokenEntity.TYPE_NAME;
+
+//@Entity
+//@Table(name = "user_token")
+//@Getter
+//@Setter
+//@NoArgsConstructor
+@Data
+@Builder
 @NoArgsConstructor
-public class TokenEntity {
+@AllArgsConstructor
+@TypeAlias(TYPE_NAME)
+@RedisHash(HASH_NAME)
+public class TokenEntity implements Serializable {
 
-    public TokenEntity(String accessToken, String refreshToken, Long userId) {
-        this.accessToken = accessToken;
-        this.refreshToken = refreshToken;
-        this.userId = userId;
-    }
+    private static final long serialVersionUID = 1L;
+    public static final String HASH_NAME = "ETWSToken";
+    public static final String TYPE_NAME = HASH_NAME + "Type";
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Indexed
     @Column(name = "access_token")
     private String accessToken;
 

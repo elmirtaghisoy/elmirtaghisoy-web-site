@@ -42,6 +42,8 @@ dependencies {
 
     implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.13.1'
 
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
 }
 
 checkstyle {

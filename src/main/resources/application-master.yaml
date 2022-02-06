@@ -6,6 +6,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+  redis:
+    client-name: JEDIS
+    host: localhost
+    port: 6379
+    timeout: 3000
 
 server:
   port: 8081

@@ -1,4 +1,4 @@
-package az.et.ws.repository;
+package az.et.ws.repository.postgres;
 
 import az.et.ws.component.entity.AppUserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
