@@ -1,12 +1,12 @@
 package az.et.ws.security;
 
+import az.et.ws.component.model.AppUser;
 import az.et.ws.component.request.LoginRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -20,10 +20,11 @@ import static az.et.ws.component.constraints.Status.WRONG_USERNAME_OR_PASSWORD;
 public class CAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
+    private final JWTUtil jwtUtil;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        LoginRequest loginRequest = JWTUtil.getRequestBody(request);
+        LoginRequest loginRequest = jwtUtil.getRequestBody(request);
         UsernamePasswordAuthenticationToken credential = new UsernamePasswordAuthenticationToken(
                 loginRequest.getUsername(),
                 loginRequest.getPassword()
@@ -33,12 +34,12 @@ public class CAuthenticationFilter extends UsernamePasswordAuthenticationFilter 
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException authenticationException) throws IOException {
-        JWTUtil.buildErrorResponse(response, WRONG_USERNAME_OR_PASSWORD);
+        jwtUtil.buildErrorResponse(response, WRONG_USERNAME_OR_PASSWORD);
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException {
-        JWTUtil.buildSuccessResponse(response, (UserDetails) authentication.getPrincipal());
+        jwtUtil.buildSuccessResponse(response, authentication);
     }
 
 }

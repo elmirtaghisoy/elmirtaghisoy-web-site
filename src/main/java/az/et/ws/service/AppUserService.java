@@ -1,9 +1,9 @@
 package az.et.ws.service;
 
 import az.et.ws.component.mapper.ObjectMapper;
+import az.et.ws.component.model.AppUser;
 import az.et.ws.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +15,8 @@ public class AppUserService implements UserDetailsService {
     private final ObjectMapper objectMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
-        return objectMapper.appUserToAppUserDetails(appUserRepository.findByUsername(username));
+    public AppUser loadUserByUsername(String username) {
+        return objectMapper.createAppUser(appUserRepository.findByUsername(username));
     }
 
 //    public AuthResponse login(LoginRequest request) {

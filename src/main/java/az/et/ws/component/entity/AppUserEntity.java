@@ -15,7 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import java.util.Collection;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -41,6 +41,27 @@ public class AppUserEntity {
     @NotBlank(message = "user.field.email")
     @Column(name = "email")
     private String email;
+
+    @NotBlank(message = "user.field.firstName")
+    @Column(name = "first_name")
+    private String firstName;
+
+    @NotBlank(message = "user.field.lastName")
+    @Column(name = "last_name")
+    private String lastName;
+
+    @NotNull
+    @Column(name = "enabled")
+    private boolean enabled;
+    @NotNull
+    @Column(name = "account_non_expired")
+    private boolean accountNonExpired;
+    @NotNull
+    @Column(name = "credentials_non_expired")
+    private boolean credentialsNonExpired;
+    @NotNull
+    @Column(name = "account_non_locked")
+    private boolean accountNonLocked;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

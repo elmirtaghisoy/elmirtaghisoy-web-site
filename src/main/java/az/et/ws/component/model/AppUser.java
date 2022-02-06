@@ -1,46 +1,28 @@
 package az.et.ws.component.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.User;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
 
-@AllArgsConstructor
 @Getter
 @Setter
 @ToString
-public class AppUser implements UserDetails {
+public class AppUser extends User {
 
     private final Long id;
-    private final String username;
     private final String firstName;
     private final String lastName;
-    private final String password;
     private final String email;
-    private final boolean enabled;
-    private final LocalDate lastPasswordResetDate;
-    private final Collection<? extends GrantedAuthority> authorities = new ArrayList<>();
 
-    public boolean isAccountNonExpired() {
-        return false;
+    public AppUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, Long id, String firstName, String lastName, String email) {
+        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
-
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    public boolean isEnabled() {
-        return false;
-    }
-
 }

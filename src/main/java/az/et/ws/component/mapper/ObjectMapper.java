@@ -2,13 +2,14 @@ package az.et.ws.component.mapper;
 
 import az.et.ws.component.entity.AppUserEntity;
 import az.et.ws.component.entity.PostEntity;
+import az.et.ws.component.entity.TokenEntity;
+import az.et.ws.component.model.AppUser;
+import az.et.ws.component.model.Token;
 import az.et.ws.component.request.PostRequest;
 import az.et.ws.component.response.PostResponse;
 import org.mapstruct.Mapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +21,25 @@ public abstract class ObjectMapper {
 
     public abstract PostResponse e2r(PostEntity entity);
 
-    public UserDetails appUserToAppUserDetails(AppUserEntity entity) {
-        UserDetails userDetails = User.builder()
-                .password(entity.getPassword())
-                .username(entity.getUsername())
-                .authorities(getAuthorities(entity))
-                .build();
-        return userDetails;
+    public abstract TokenEntity m2e(Token token);
+
+    public AppUser createAppUser(AppUserEntity entity) {
+        return new AppUser(
+                entity.getUsername(),
+                entity.getPassword(),
+                entity.isEnabled(),
+                entity.isAccountNonExpired(),
+                entity.isCredentialsNonExpired(),
+                entity.isAccountNonLocked(),
+                getAuthorities(entity),
+                entity.getId(),
+                entity.getFirstName(),
+                entity.getLastName(),
+                entity.getEmail()
+        );
     }
 
-    protected List<GrantedAuthority> getAuthorities(AppUserEntity entity) {
+    private List<GrantedAuthority> getAuthorities(AppUserEntity entity) {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         entity.getRoles().forEach(role -> {
@@ -41,4 +51,5 @@ public abstract class ObjectMapper {
 
         return authorities;
     }
+
 }
