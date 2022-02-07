@@ -3,9 +3,12 @@ package az.et.ws.service;
 import az.et.ws.component.mapper.ObjectMapper;
 import az.et.ws.component.model.AppUser;
 import az.et.ws.repository.postgres.AppUserRepository;
+import az.et.ws.security.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+
+import javax.validation.constraints.NotBlank;
 
 @Service
 @RequiredArgsConstructor
@@ -13,11 +16,17 @@ public class AppUserService implements UserDetailsService {
 
     private final AppUserRepository appUserRepository;
     private final ObjectMapper objectMapper;
+    private final JWTUtil jwtUtil;
 
     @Override
     public AppUser loadUserByUsername(String username) {
         return objectMapper.createAppUser(appUserRepository.findByUsername(username));
     }
+
+    public void logout(@NotBlank String bearerToken) {
+        jwtUtil.logout(bearerToken);
+    }
+
 
 //    public AuthResponse login(LoginRequest request) {
 //        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface TokenRepository extends CrudRepository<TokenEntity, Long> {
+public interface TokenRepository extends CrudRepository<TokenEntity, String> {
     Optional<TokenEntity> findByAccessToken(String token);
+
+    void deleteByAccessToken(String token);
 }

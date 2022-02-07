@@ -1,5 +1,6 @@
 package az.et.ws.security;
 
+import az.et.ws.component.exception.InvalidTokenException;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +25,13 @@ public class CAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-            if (request.getServletPath().equals("/login") || request.getServletPath().equals("/api/v1/refresh-token/**")) {
+            if (request.getServletPath().equals("/login") || request.getServletPath().equals("/api/v1/refresh-token/**") || request.getServletPath().equals("/logout/")) {
                 filterChain.doFilter(request, response);
             } else {
                 String authorizationHeader = request.getHeader(AUTHORIZATION);
                 if (Objects.nonNull(authorizationHeader) && authorizationHeader.startsWith("Bearer ")) {
                     jwtUtil.verifyToken(request, response, filterChain, authorizationHeader);
+                    filterChain.doFilter(request, response);
                 } else {
                     filterChain.doFilter(request, response);
                 }

@@ -1,20 +1,25 @@
 package az.et.ws.api;
 
+import az.et.ws.component.response.SuccessResponse;
+import az.et.ws.service.AppUserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotBlank;
+
 @RestController
-@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class AuthenticationApi {
 
-//    private final AppUserService appUserService;
+    private final AppUserService appUserService;
 
-//    @PostMapping("/login")
-//    public SuccessResponse<AuthResponse> login(@RequestBody LoginRequest request) {
-//        return SuccessResponse.create(appUserService.login(request));
-//    }
+    @PostMapping("/logout")
+    public SuccessResponse<String> logout(@RequestHeader("Authorization") @NotBlank String bearerToken) {
+        appUserService.logout(bearerToken);
+        return SuccessResponse.ok();
+    }
 //
 //    @PostMapping("/refresh-token")
 //    public SuccessResponse<AuthResponse> refreshToken(@RequestBody RefreshTokeRequest request) {

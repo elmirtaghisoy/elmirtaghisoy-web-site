@@ -43,6 +43,13 @@ public class SuccessResponse<R> {
         return response;
     }
 
+    public static <R> SuccessResponse<R> ok() {
+        SuccessResponse<R> response = new SuccessResponse<R>();
+        response.setStatus(Status.SUCCESS);
+        response.setTimestamp(LocalDateTime.now());
+        return response;
+    }
+
     public static <R> SuccessResponse<R> delete() {
         SuccessResponse<R> response = new SuccessResponse<R>();
         response.setStatus(Status.DELETE);

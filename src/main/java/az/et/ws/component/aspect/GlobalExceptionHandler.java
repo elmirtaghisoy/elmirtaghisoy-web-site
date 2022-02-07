@@ -1,6 +1,7 @@
 package az.et.ws.component.aspect;
 
 
+import az.et.ws.component.exception.InvalidTokenException;
 import az.et.ws.component.model.ValidationError;
 import az.et.ws.component.response.ErrorResponse;
 import az.et.ws.util.Translator;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 import static az.et.ws.component.constraints.Status.ACCESS_DENIED;
 import static az.et.ws.component.constraints.Status.DATA_NOT_FOUND;
+import static az.et.ws.component.constraints.Status.INVALID_TOKEN;
 import static az.et.ws.component.constraints.Status.UNKNOWN_ERROR;
 import static az.et.ws.component.constraints.Status.VALIDATION_ERROR;
 
@@ -55,6 +57,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ErrorResponse<String> accessDeniedException(AccessDeniedException exception) {
         return ErrorResponse.error(ACCESS_DENIED, ExceptionUtils.getStackTrace(exception));
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ErrorResponse<String> invalidTokenException() {
+        return ErrorResponse.error(INVALID_TOKEN);
     }
 
 }

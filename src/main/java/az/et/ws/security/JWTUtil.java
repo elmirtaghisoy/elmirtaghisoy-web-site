@@ -3,6 +3,7 @@ package az.et.ws.security;
 import az.et.ws.component.constraints.Status;
 import az.et.ws.component.entity.TokenEntity;
 import az.et.ws.component.exception.BadLoginRequestException;
+import az.et.ws.component.exception.InvalidTokenException;
 import az.et.ws.component.model.AppUser;
 import az.et.ws.component.model.Token;
 import az.et.ws.component.request.LoginRequest;
@@ -13,7 +14,6 @@ import az.et.ws.repository.redis.TokenRepository;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -99,7 +99,7 @@ public class JWTUtil {
     }
 
     protected Token generateToken(AppUser appUser) {
-        return Token.builder().accessToken(accessToken(appUser)).refreshToken(refreshToken(appUser)).id(appUser.getId()).build();
+        return Token.builder().accessToken(accessToken(appUser)).refreshToken(refreshToken(appUser)).id(appUser.getId()).userId(appUser.getId()).build();
     }
 
     protected AuthResponse createTokenAndSession(Authentication authentication) {
@@ -112,10 +112,10 @@ public class JWTUtil {
     }
 
     protected Optional<TokenEntity> findByAccessToken(String token) {
-        return tokenRepository.findByAccessToken(token);
+        return tokenRepository.findById(token);
     }
 
-    protected void verifyToken(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, String authorizationHeader) throws IOException, ServletException {
+    protected void verifyToken(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, String authorizationHeader) throws IOException, InvalidTokenException, ServletException {
         String token = authorizationHeader.substring("Bearer ".length());
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256(getJwtSecret())).build();
         DecodedJWT decodedJWT = verifier.verify(token);
@@ -130,7 +130,22 @@ public class JWTUtil {
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             filterChain.doFilter(request, response);
         } else {
-            throw new TokenExpiredException("HOZU XETA");
+            throw new InvalidTokenException();
         }
     }
+
+    public void logout(String bearerToken) {
+        try {
+            String token = bearerToken.substring("Bearer ".length());
+            JWT.require(Algorithm.HMAC256(getJwtSecret())).build().verify(token);
+            if (findByAccessToken(token).isPresent()) {
+                tokenRepository.deleteById(token);
+            } else {
+                throw new InvalidTokenException();
+            }
+        } catch (InvalidTokenException ex) {
+            throw new InvalidTokenException();
+        }
+    }
+
 }
