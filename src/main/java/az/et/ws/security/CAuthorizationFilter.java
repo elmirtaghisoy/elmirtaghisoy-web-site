@@ -42,7 +42,7 @@ public class CAuthorizationFilter extends OncePerRequestFilter {
             } else {
                 String authorizationHeader = request.getHeader(AUTHORIZATION);
                 if (Objects.nonNull(authorizationHeader) && authorizationHeader.startsWith("Bearer ")) {
-                    String token = jwtUtil.extractToken(authorizationHeader);
+                    String token = jwtUtil.verifyToken(authorizationHeader);
                     JWTVerifier verifier = JWT.require(Algorithm.HMAC256(jwtUtil.getJwtSecret())).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
                     String username = decodedJWT.getSubject();

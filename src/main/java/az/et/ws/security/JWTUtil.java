@@ -35,26 +35,6 @@ public class JWTUtil {
         return jwtSecret.getBytes();
     }
 
-    protected String accessToken(UserDetails user) {
-        return JWT.create()
-                .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
-                .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-                .sign(Algorithm.HMAC256(getJwtSecret()));
-    }
-
-    protected String refreshToken(UserDetails user) {
-        return JWT.create()
-                .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
-                .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-                .sign(Algorithm.HMAC256(getJwtSecret()));
-    }
-
-    protected Token generateToken(AppUser appUser) {
-        return Token.builder().accessToken(accessToken(appUser)).refreshToken(refreshToken(appUser)).build();
-    }
-
     public AuthResponse createTokenAndSession(Authentication authentication) {
         AppUser appUser = (AppUser) authentication.getPrincipal();
         AuthResponse authResponse = AuthResponse.builder()
@@ -64,11 +44,7 @@ public class JWTUtil {
         return authResponse;
     }
 
-    protected Optional<TokenEntity> findAuthToken(String token) {
-        return tokenRepository.findById(token);
-    }
-
-    public String extractToken(String authorizationHeader) throws InvalidTokenException {
+    public String verifyToken(String authorizationHeader) throws InvalidTokenException {
         String token = authorizationHeader.substring("Bearer ".length());
         if (findAuthToken(token).isPresent()) {
             return findAuthToken(token).get().getAccessToken();
@@ -84,6 +60,30 @@ public class JWTUtil {
         } else {
             throw new InvalidTokenException();
         }
+    }
+
+    protected Optional<TokenEntity> findAuthToken(String token) {
+        return tokenRepository.findById(token);
+    }
+
+    private String accessToken(UserDetails user) {
+        return JWT.create()
+                .withSubject(user.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .sign(Algorithm.HMAC256(getJwtSecret()));
+    }
+
+    private String refreshToken(UserDetails user) {
+        return JWT.create()
+                .withSubject(user.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
+                .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .sign(Algorithm.HMAC256(getJwtSecret()));
+    }
+
+    private Token generateToken(AppUser appUser) {
+        return Token.builder().accessToken(accessToken(appUser)).refreshToken(refreshToken(appUser)).build();
     }
 
 }
