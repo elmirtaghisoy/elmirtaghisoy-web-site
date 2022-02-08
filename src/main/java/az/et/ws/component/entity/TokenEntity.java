@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;
 import java.io.Serializable;
+import java.util.Collection;
 
 import static az.et.ws.component.entity.TokenEntity.HASH_NAME;
 import static az.et.ws.component.entity.TokenEntity.TYPE_NAME;
@@ -35,5 +37,8 @@ public class TokenEntity implements Serializable {
 
     @Column(name = "username")
     private String username;
+
+    @Column(name = "authorities")
+    private Collection<GrantedAuthority> authorities;
 
 }
