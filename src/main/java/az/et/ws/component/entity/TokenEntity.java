@@ -33,7 +33,7 @@ public class TokenEntity implements Serializable {
     @Column(name = "refresh_token")
     private String refreshToken;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "username")
+    private String username;
 
 }

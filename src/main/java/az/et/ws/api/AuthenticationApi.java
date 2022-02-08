@@ -1,9 +1,12 @@
 package az.et.ws.api;
 
+import az.et.ws.component.request.LoginRequest;
+import az.et.ws.component.response.AuthResponse;
 import az.et.ws.component.response.SuccessResponse;
 import az.et.ws.service.AppUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,12 +18,22 @@ public class AuthenticationApi {
 
     private final AppUserService appUserService;
 
+    @PostMapping("/login")
+    public SuccessResponse<AuthResponse> login(
+            @RequestBody LoginRequest loginRequest
+    ) {
+        return SuccessResponse.create(appUserService.login(loginRequest));
+    }
+
+
     @PostMapping("/logout")
-    public SuccessResponse<String> logout(@RequestHeader("Authorization") @NotBlank String bearerToken) {
+    public SuccessResponse<String> logout(
+            @NotBlank @RequestHeader("Authorization") String bearerToken
+    ) {
         appUserService.logout(bearerToken);
         return SuccessResponse.ok();
     }
-//
+
 //    @PostMapping("/refresh-token")
 //    public SuccessResponse<AuthResponse> refreshToken(@RequestBody RefreshTokeRequest request) {
 //        return SuccessResponse.update(appUserService.refreshToken(request));

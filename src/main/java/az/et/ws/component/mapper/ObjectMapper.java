@@ -13,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Mapper(componentModel = "spring")
 public abstract class ObjectMapper {

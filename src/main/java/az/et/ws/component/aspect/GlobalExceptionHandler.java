@@ -10,6 +10,8 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -24,6 +26,7 @@ import static az.et.ws.component.constraints.Status.DATA_NOT_FOUND;
 import static az.et.ws.component.constraints.Status.INVALID_TOKEN;
 import static az.et.ws.component.constraints.Status.UNKNOWN_ERROR;
 import static az.et.ws.component.constraints.Status.VALIDATION_ERROR;
+import static az.et.ws.component.constraints.Status.WRONG_USERNAME_OR_PASSWORD;
 
 @RestControllerAdvice
 @RequiredArgsConstructor
@@ -64,5 +67,12 @@ public class GlobalExceptionHandler {
         return ErrorResponse.error(INVALID_TOKEN);
     }
 
+    @ExceptionHandler({
+            BadCredentialsException.class,
+            InternalAuthenticationServiceException.class
+    })
+    public ErrorResponse<String> badCredentialsException() {
+        return ErrorResponse.error(WRONG_USERNAME_OR_PASSWORD);
+    }
 }
 
