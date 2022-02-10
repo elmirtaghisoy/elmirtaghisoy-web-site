@@ -3,7 +3,7 @@ package az.et.ws.api;
 import az.et.ws.component.request.LoginRequest;
 import az.et.ws.component.response.AuthResponse;
 import az.et.ws.component.response.SuccessResponse;
-import az.et.ws.service.AppUserService;
+import az.et.ws.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,13 +16,13 @@ import javax.validation.constraints.NotBlank;
 @RequiredArgsConstructor
 public class AuthenticationApi {
 
-    private final AppUserService appUserService;
+    private final AuthService authService;
 
     @PostMapping("/login")
     public SuccessResponse<AuthResponse> login(
             @RequestBody LoginRequest loginRequest
     ) {
-        return SuccessResponse.create(appUserService.login(loginRequest));
+        return SuccessResponse.create(authService.login(loginRequest));
     }
 
 
@@ -30,7 +30,7 @@ public class AuthenticationApi {
     public SuccessResponse<String> logout(
             @NotBlank @RequestHeader("Authorization") String bearerToken
     ) {
-        appUserService.logout(bearerToken);
+        authService.logout(bearerToken);
         return SuccessResponse.ok();
     }
 

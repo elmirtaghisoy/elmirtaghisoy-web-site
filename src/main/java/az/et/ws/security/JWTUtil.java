@@ -70,7 +70,7 @@ public class JWTUtil {
         }
     }
 
-    protected Optional<TokenEntity> findAuthToken(String token) {
+    private Optional<TokenEntity> findAuthToken(String token) {
         return tokenRepository.findById(token);
     }
 
