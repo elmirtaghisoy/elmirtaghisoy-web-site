@@ -5,10 +5,10 @@ spring:
     password: user_et
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
   redis:
     client-name: JEDIS
-    host: localhost
+    host: redis
     port: 6379
     timeout: 3000
 server:
