@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
+import static net.logstash.logback.argument.StructuredArguments.kv;
+
 @Slf4j
 @Aspect
 @Component
@@ -28,13 +30,14 @@ public class LoggingAspect {
 
     @Before("services()")
     public void beforeExecuting(JoinPoint joinPoint) {
-        log.info("###### Starting: {} ", joinPoint.getSignature().getName());
+        log.info("Starting: {} ", joinPoint.getSignature().getName());
         log.info("****** Request: {}", Arrays.toString(joinPoint.getArgs()));
     }
 
     @AfterReturning(value = "services()", returning = "response")
     public void afterReturningSuccess(Object response) {
-        log.info("****** Response\t: {}", response.toString());
+//        log.info("****** Response\t: {}", response.toString());
+        log.info("Some message", kv("response", response));
     }
 
     @AfterThrowing("services()")

@@ -24,7 +24,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor
-public class CAuthorizationFilter extends OncePerRequestFilter {
+public class AuthorizationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
 
@@ -46,10 +46,8 @@ public class CAuthorizationFilter extends OncePerRequestFilter {
                                     token.getUsername(), null, token.getAuthorities()
                             );
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                    filterChain.doFilter(request, response);
-                } else {
-                    filterChain.doFilter(request, response);
                 }
+                filterChain.doFilter(request, response);
             }
         } catch (JWTDecodeException | InvalidTokenException | TokenExpiredException ex) {
             response.setContentType(APPLICATION_JSON_VALUE);

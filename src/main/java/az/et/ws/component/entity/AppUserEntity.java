@@ -53,12 +53,15 @@ public class AppUserEntity {
     @NotNull
     @Column(name = "enabled")
     private boolean enabled;
+
     @NotNull
     @Column(name = "account_non_expired")
     private boolean accountNonExpired;
+
     @NotNull
     @Column(name = "credentials_non_expired")
     private boolean credentialsNonExpired;
+
     @NotNull
     @Column(name = "account_non_locked")
     private boolean accountNonLocked;
