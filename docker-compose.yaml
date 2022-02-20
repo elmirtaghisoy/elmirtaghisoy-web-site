@@ -9,9 +9,6 @@ services:
     build: ./
     links:
       - redis
-    labels:
-      collect_logs_with_filebeat: "true"
-      decode_log_event_to_json_object: "true"
     env_file: ./.env
     ports:
       - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
@@ -22,6 +19,9 @@ services:
         }'
     volumes:
       - /home/elmirt/Desktop/logs:/var/logs/et-website
+    labels:
+      collect_logs_with_filebeat: "true"
+      decode_log_event_to_json_object: "true"
 
   mysqldb:
     container_name: et-website_db
@@ -34,9 +34,6 @@ services:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
       - /home/elmirt/Desktop/db2:/var/lib/mysql
-    labels:
-      collect_logs_with_filebeat: "true"
-      decode_log_event_to_json_object: "true"
 
   redis:
     container_name: et-website_redis
@@ -48,30 +45,39 @@ services:
       decode_log_event_to_json_object: "true"
 
   elasticsearch:
+    container_name: elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2-amd64
     ports:
-      - "9200:9200"
+      - 9200:9200
     environment:
       discovery.type: single-node
-    labels:
-      collect_logs_with_filebeat: "true"
-      decode_log_event_to_json_object: "true"
-
 
   kibana:
+    container_name: kibana
     image: docker.elastic.co/kibana/kibana:7.9.2
     ports:
-      - "5601:5601"
+      - 5601:5601
     depends_on:
       - elasticsearch
-    labels:
-      collect_logs_with_filebeat: "true"
-      decode_log_event_to_json_object: "true"
+
+  #  logstash:
+  #    container_name: logstash
+  #    image: docker.elastic.co/logstash/logstash:7.8.0
+  #    ports:
+  #      - "25826:25826"
+  #      - "5044:5044"
+  #    volumes:
+  #      - /home/elmirt/Desktop/logstash/pipeline:/usr/share/logstash/pipeline:ro
+  #    restart: on-failure
+  #    depends_on:
+  #      - elasticsearch
 
   filebeat:
-    image: docker.elastic.co/beats/filebeat:8.0.0
+    image: docker.elastic.co/beats/filebeat:7.7.0
     volumes:
-      - /home/elmirt/Desktop/filebeat/filebeat.docker.yaml:/usr/share/filebeat/filebeat.yaml:ro
-    labels:
-      collect_logs_with_filebeat: "true"
-      decode_log_event_to_json_object: "true"
+      - ./filebeat/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    user: root
+    command: ["--strict.perms=false"]
+    restart: on-failure
