@@ -5,7 +5,7 @@ import az.et.ws.component.model.AppUser;
 import az.et.ws.component.request.LoginRequest;
 import az.et.ws.component.response.AuthResponse;
 import az.et.ws.repository.postgres.AppUserRepository;
-import az.et.ws.security.JWTUtil;
+import az.et.ws.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +20,7 @@ public class AuthService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
     private final ObjectMapper objectMapper;
     private final AuthenticationManager authenticationManager;
-    private final JWTUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
     @Override
     public AppUser loadUserByUsername(String username) {
@@ -40,8 +40,7 @@ public class AuthService implements UserDetailsService {
         jwtUtil.invalidateToken(bearerToken);
     }
 
-/*
-    public AuthResponse refreshToken(RefreshTokeRequest request) {
+    /*public AuthResponse refreshToken(RefreshTokeRequest request) {
         String refreshToken = request.getRefreshToken();
         if (Objects.nonNull(refreshToken) && refreshToken.startsWith("Bearer ")) {
             try {
@@ -59,7 +58,6 @@ public class AuthService implements UserDetailsService {
             throw new RuntimeException("Refresh token is missing");
         }
         return null;
-    }
-*/
+    }*/
 
 }

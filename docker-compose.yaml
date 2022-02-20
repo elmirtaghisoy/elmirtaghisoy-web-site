@@ -60,18 +60,6 @@ services:
     depends_on:
       - elasticsearch
 
-  #  logstash:
-  #    container_name: logstash
-  #    image: docker.elastic.co/logstash/logstash:7.8.0
-  #    ports:
-  #      - "25826:25826"
-  #      - "5044:5044"
-  #    volumes:
-  #      - /home/elmirt/Desktop/logstash/pipeline:/usr/share/logstash/pipeline:ro
-  #    restart: on-failure
-  #    depends_on:
-  #      - elasticsearch
-
   filebeat:
     image: docker.elastic.co/beats/filebeat:7.7.0
     volumes:
@@ -79,5 +67,5 @@ services:
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
     user: root
-    command: ["--strict.perms=false"]
+    command: [ "--strict.perms=false" ]
     restart: on-failure

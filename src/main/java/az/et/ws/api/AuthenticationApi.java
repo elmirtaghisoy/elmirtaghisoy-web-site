@@ -34,9 +34,9 @@ public class AuthenticationApi {
         return SuccessResponse.ok();
     }
 
-//    @PostMapping("/refresh-token")
-//    public SuccessResponse<AuthResponse> refreshToken(@RequestBody RefreshTokeRequest request) {
-//        return SuccessResponse.update(appUserService.refreshToken(request));
-//    }
+    /*@PostMapping("/refresh-token")
+    public SuccessResponse<AuthResponse> refreshToken(@RequestBody RefreshTokeRequest request) {
+        return SuccessResponse.update(appUserService.refreshToken(request));
+    }*/
 
 }

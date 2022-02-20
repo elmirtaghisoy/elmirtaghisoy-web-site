@@ -18,7 +18,19 @@ public class AppUser extends User {
     private final String lastName;
     private final String email;
 
-    public AppUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, Long id, String firstName, String lastName, String email) {
+    public AppUser(
+            String username,
+            String password,
+            boolean enabled,
+            boolean accountNonExpired,
+            boolean credentialsNonExpired,
+            boolean accountNonLocked,
+            Collection<? extends GrantedAuthority> authorities,
+            Long id,
+            String firstName,
+            String lastName,
+            String email
+    ) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.id = id;
         this.firstName = firstName;

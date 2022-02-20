@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class JWTUtil {
+public class JwtUtil {
 
     @Value("${secret.jwt}")
     private String jwtSecret;
@@ -78,7 +78,11 @@ public class JWTUtil {
         return JWT.create()
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
-                .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .withClaim(
+                        "roles",
+                        user.getAuthorities().stream()
+                                .map(GrantedAuthority::getAuthority)
+                                .collect(Collectors.toList()))
                 .sign(Algorithm.HMAC256(getJwtSecret()));
     }
 
@@ -86,7 +90,11 @@ public class JWTUtil {
         return JWT.create()
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
-                .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .withClaim(
+                        "roles",
+                        user.getAuthorities().stream()
+                                .map(GrantedAuthority::getAuthority)
+                                .collect(Collectors.toList()))
                 .sign(Algorithm.HMAC256(getJwtSecret()));
     }
 
