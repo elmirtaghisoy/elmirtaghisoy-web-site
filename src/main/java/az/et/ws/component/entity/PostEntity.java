@@ -15,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 @Table(name = "post")
 @Getter
 @Setter
-public class PostEntity {
+public class PostEntity extends Auditable {
 
     @Id
     @Column(name = "id")

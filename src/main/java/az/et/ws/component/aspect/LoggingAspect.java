@@ -10,8 +10,6 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-
 import static net.logstash.logback.argument.StructuredArguments.kv;
 
 @Slf4j
@@ -30,28 +28,39 @@ public class LoggingAspect {
 
     @Before("services()")
     public void beforeExecuting(JoinPoint joinPoint) {
-        log.info("Starting: {} ", joinPoint.getSignature().getName());
-        log.info("****** Request: {}", Arrays.toString(joinPoint.getArgs()));
+        log.info("Executing",
+                kv("methodName", joinPoint.getSignature().getName()),
+                kv("request", joinPoint.getArgs())
+        );
     }
 
     @AfterReturning(value = "services()", returning = "response")
-    public void afterReturningSuccess(Object response) {
-//        log.info("****** Response\t: {}", response.toString());
-        log.info("Some message", kv("response", response));
+    public void afterReturningSuccess(JoinPoint joinPoint, Object response) {
+        log.info("Successful Executing",
+                kv("methodName", joinPoint.getSignature().getName()),
+                kv("response", response)
+        );
     }
 
     @AfterThrowing("services()")
     public void afterThrowingError(JoinPoint joinPoint) {
-        log.error("****** Response: {}", "Error occur in " + joinPoint.getSignature().getName());
+        log.info("Failed Executing",
+                kv("methodName", joinPoint.getSignature().getName())
+        );
     }
 
     @After("services()")
     public void afterExecuting(JoinPoint joinPoint) {
-        log.info("###### Ending: {} ", joinPoint.getSignature().getName());
+        log.info("Successful Finished",
+                kv("methodName", joinPoint.getSignature().getName())
+        );
     }
 
     @AfterReturning(value = "exceptions()", returning = "response")
-    public void afterReturningError(Object response) {
-        log.error("****** Error Response: {}", response.toString());
+    public void afterReturningError(JoinPoint joinPoint, Object response) {
+        log.info("Failed Executing",
+                kv("methodName", joinPoint.getSignature().getName()),
+                kv("errorResponse", response)
+        );
     }
 }

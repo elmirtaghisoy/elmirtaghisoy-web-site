@@ -69,3 +69,6 @@ services:
     user: root
     command: [ "--strict.perms=false" ]
     restart: on-failure
+
+  #jenkins
+  #vault

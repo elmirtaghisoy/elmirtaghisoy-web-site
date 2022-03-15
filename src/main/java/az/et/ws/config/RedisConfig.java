@@ -9,6 +9,6 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
         basePackages = "az.et.ws.repository.redis",
         enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP
 )
-public class AppConfig {
+public class RedisConfig {
 
 }

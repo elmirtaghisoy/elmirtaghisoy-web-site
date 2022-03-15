@@ -1,9 +1,12 @@
 <included>
     <appender name="APPENDER-CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-<!--            <providers>-->
-<!--                <arguments/>-->
-<!--            </providers>-->
+            <fieldNames>
+                <thread>[ignore]</thread>
+                <logger>[ignore]</logger>
+                <version>[ignore]</version>
+                <levelValue>[ignore]</levelValue>
+            </fieldNames>
         </encoder>
     </appender>
 </included>
