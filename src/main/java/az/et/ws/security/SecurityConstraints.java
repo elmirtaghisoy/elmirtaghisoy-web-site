@@ -7,7 +7,9 @@ public interface SecurityConstraints {
     List<String> WHITE_LIST = List.of(
             "/refresh-token/**",
             "/logout/**",
-            "/login/**"
+            "/login/**",
+            "/oauth2/authorize/**",
+            "/registration"
     );
 
     static boolean pathIsWhiteListed(String path) {

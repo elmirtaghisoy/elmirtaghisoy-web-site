@@ -2,6 +2,7 @@ package az.et.ws.component.aspect;
 
 
 import az.et.ws.component.exception.InvalidTokenException;
+import az.et.ws.component.exception.UserAlreadyExists;
 import az.et.ws.component.model.ValidationError;
 import az.et.ws.component.response.ErrorResponse;
 import az.et.ws.util.Translator;
@@ -25,6 +26,7 @@ import static az.et.ws.component.constraints.Status.ACCESS_DENIED;
 import static az.et.ws.component.constraints.Status.DATA_NOT_FOUND;
 import static az.et.ws.component.constraints.Status.INVALID_TOKEN;
 import static az.et.ws.component.constraints.Status.UNKNOWN_ERROR;
+import static az.et.ws.component.constraints.Status.USER_ALREADY_EXISTS;
 import static az.et.ws.component.constraints.Status.VALIDATION_ERROR;
 import static az.et.ws.component.constraints.Status.WRONG_USERNAME_OR_PASSWORD;
 
@@ -73,6 +75,12 @@ public class GlobalExceptionHandler {
     })
     public ErrorResponse<String> badCredentialsException() {
         return ErrorResponse.error(WRONG_USERNAME_OR_PASSWORD);
+    }
+
+    @ExceptionHandler({UserAlreadyExists.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse<String> userAlreadyExists(Throwable throwable) {
+        return ErrorResponse.error(USER_ALREADY_EXISTS, throwable.getMessage());
     }
 }
 

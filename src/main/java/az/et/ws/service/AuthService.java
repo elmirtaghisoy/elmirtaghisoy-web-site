@@ -1,9 +1,14 @@
 package az.et.ws.service;
 
+import az.et.ws.component.entity.AppRoleEntity;
+import az.et.ws.component.entity.AuthenticationProvider;
+import az.et.ws.component.exception.UserAlreadyExists;
 import az.et.ws.component.mapper.ObjectMapper;
 import az.et.ws.component.model.AppUser;
 import az.et.ws.component.request.LoginRequest;
+import az.et.ws.component.request.RegistrationRequest;
 import az.et.ws.component.response.AuthResponse;
+import az.et.ws.repository.postgres.AppRoleRepository;
 import az.et.ws.repository.postgres.AppUserRepository;
 import az.et.ws.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -22,22 +27,34 @@ public class AuthService implements UserDetailsService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
+    private final AppRoleRepository appRoleRepository;
+
     @Override
     public AppUser loadUserByUsername(String username) {
-        return objectMapper.createAppUser(appUserRepository.findByUsername(username));
+        return objectMapper.generateAppUser(appUserRepository.findByUsername(username));
     }
 
     public AuthResponse login(LoginRequest loginRequest) {
-        UsernamePasswordAuthenticationToken credential = new UsernamePasswordAuthenticationToken(
-                loginRequest.getUsername(),
-                loginRequest.getPassword()
-        );
+        UsernamePasswordAuthenticationToken credential = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
         Authentication authentication = authenticationManager.authenticate(credential);
         return jwtUtil.createTokenAndSession(authentication);
     }
 
     public void logout(String bearerToken) {
         jwtUtil.invalidateToken(bearerToken);
+    }
+
+    public AppUser registration(RegistrationRequest request, AuthenticationProvider authenticationProvider) {
+        if (emailAlreadyExists(request.getEmail())) {
+            throw new UserAlreadyExists(request.getEmail());
+        } else {
+            AppRoleEntity appRole = appRoleRepository.findByName("USER");
+            return objectMapper.generateAppUser(appUserRepository.save(objectMapper.createNewUser(request, authenticationProvider, appRole)));
+        }
+    }
+
+    private Boolean emailAlreadyExists(String email) {
+        return appUserRepository.existsByEmail(email);
     }
 
     /*public AuthResponse refreshToken(RefreshTokeRequest request) {

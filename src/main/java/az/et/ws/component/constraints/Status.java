@@ -22,6 +22,7 @@ public enum Status {
     ACCESS_DENIED(1009, "standard.access-denied"),
     INVALID_TOKEN(1010, "standard.invalid-token"),
     EXPIRED_TOKEN(1011, "standard.expired-token"),
+    USER_ALREADY_EXISTS(1012, "standard.user-already-exists"),
     UNKNOWN_ERROR(2000, "standard.unknown-error");
 
     private final int code;

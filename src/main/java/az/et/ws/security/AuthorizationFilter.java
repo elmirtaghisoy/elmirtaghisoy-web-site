@@ -4,8 +4,6 @@ import az.et.ws.component.constraints.Status;
 import az.et.ws.component.entity.TokenEntity;
 import az.et.ws.component.exception.InvalidTokenException;
 import az.et.ws.component.response.ErrorResponse;
-import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -49,7 +47,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                 }
                 filterChain.doFilter(request, response);
             }
-        } catch (JWTDecodeException | InvalidTokenException | TokenExpiredException ex) {
+        } catch (InvalidTokenException ex) {
             response.setContentType(APPLICATION_JSON_VALUE);
             new ObjectMapper().writeValue(
                     response.getOutputStream(),

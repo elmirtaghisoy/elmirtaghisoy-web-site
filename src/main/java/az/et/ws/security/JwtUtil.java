@@ -6,8 +6,8 @@ import az.et.ws.component.mapper.ObjectMapper;
 import az.et.ws.component.model.AppUser;
 import az.et.ws.component.response.AuthResponse;
 import az.et.ws.repository.redis.TokenRepository;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -75,27 +75,24 @@ public class JwtUtil {
     }
 
     private String accessToken(UserDetails user) {
-        return JWT.create()
-                .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
-                .withClaim(
-                        "roles",
-                        user.getAuthorities().stream()
-                                .map(GrantedAuthority::getAuthority)
-                                .collect(Collectors.toList()))
-                .sign(Algorithm.HMAC256(getJwtSecret()));
+        return Jwts.builder()
+                .claim("roles", user.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.toList()))
+                .setSubject(user.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 10 * 60 * 1000)).signWith(SignatureAlgorithm.HS256, getJwtSecret()).compact();
     }
 
     private String refreshToken(UserDetails user) {
-        return JWT.create()
-                .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
-                .withClaim(
-                        "roles",
-                        user.getAuthorities().stream()
-                                .map(GrantedAuthority::getAuthority)
-                                .collect(Collectors.toList()))
-                .sign(Algorithm.HMAC256(getJwtSecret()));
+        return Jwts.builder()
+                .claim("roles", user.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.toList()))
+                .setSubject(user.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 30 * 60 * 1000)).signWith(SignatureAlgorithm.HS256, getJwtSecret()).compact();
     }
 
 }
+

@@ -5,4 +5,4 @@ spring:
     properties.hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
 
 secret:
-  jwt: "jwt-secret"
+  jwt: "jwt-secret-et-webiste-test-jwt-secret-et-webiste-test"

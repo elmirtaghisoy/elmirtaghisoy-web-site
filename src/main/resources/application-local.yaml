@@ -3,14 +3,29 @@ spring:
     url: jdbc:mysql://localhost:3306/etwebsite
     username: root
     password: root
+
   jpa:
     hibernate:
       ddl-auto: validate
+
   redis:
     client-name: JEDIS
     host: localhost
     port: 6379
     timeout: 3000
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: "538981183295-d6g8ir58b4b0tqedouikd2lb726pmbd7.apps.googleusercontent.com"
+            client-secret: "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"
+            scope:
+              - email
+              - profile
+
+
 server:
   port: 8081
+

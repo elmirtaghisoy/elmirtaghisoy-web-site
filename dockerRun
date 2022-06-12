@@ -1,0 +1,23 @@
+********
+
+FROM openjdk:11
+LABEL maintainer="heroes.az"
+ENV TZ=Asia/Baku
+VOLUME /media
+WORKDIR /app
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+COPY /heroes-2.5.6.jar heroes-2.5.6.jar
+ENTRYPOINT ["java","-jar","heroes-2.5.6.jar"]
+CMD java -jar heroes-2.5.6.jar
+
+********
+
+sudo docker build . -t heroes
+
+sudo docker network create heroes-net
+
+sudo docker run -p 3307:3306 --name mysqldb --net heroes-net -d -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE='heroes.az' -e MYSQL_USER=user -e MYSQL_PASSWORD=user12345user -v "/home/elmirt/Desktop/uploads":/media  -v "/home/elmirt/Desktop/db2":/var/lib/mysql mysql
+
+sudo docker run -p 8086:8080 --name heroes --net heroes-net -d -v "/home/elmirt/Desktop/uploads":/media heroes
+
+********

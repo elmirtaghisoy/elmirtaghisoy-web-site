@@ -1,1 +1,10 @@
-1. unauthorized olduqda error qayitmir
+1. Adi login prosesinde
+    => login olur.
+
+2. Adi qeydiyyat prosesinde yoxlanilir
+    => yeni userdirse qeydiyyatdan kecir
+    => eks halda xeta qayidir
+
+2. Google ile daxil olduqda yoxlanilir
+    => yeni userdirse qeydiyyatdan kecir
+    => kohne userdirse login olur

@@ -1,5 +1,6 @@
 package az.et.ws.security;
 
+import az.et.ws.service.COAuth2Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtUtil jwtUtil;
+    private final COAuth2Service coAuth2Service;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -30,6 +32,15 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(WHITE_LIST.toArray(String[]::new)).permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilterBefore(new AuthorizationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+
+        http.oauth2Login()
+                .authorizationEndpoint()
+                .baseUri("/oauth2/authorize-client")
+                .and()
+                .userInfoEndpoint()
+                .userService(coAuth2Service)
+                .and()
+                .successHandler(new OAuth2SuccessHandler());
     }
 
     @Bean
