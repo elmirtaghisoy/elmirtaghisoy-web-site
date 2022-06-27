@@ -8,8 +8,7 @@ public interface SecurityConstraints {
             "/refresh-token/**",
             "/logout/**",
             "/login/**",
-            "/oauth2/authorize/**",
-            "/registration"
+            "/registration/**"
     );
 
     static boolean pathIsWhiteListed(String path) {

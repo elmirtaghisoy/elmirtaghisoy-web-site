@@ -2,7 +2,7 @@ package az.et.ws.service;
 
 import az.et.ws.component.entity.AppRoleEntity;
 import az.et.ws.component.entity.AuthenticationProvider;
-import az.et.ws.component.exception.UserAlreadyExists;
+import az.et.ws.component.exception.UserAlreadyExistsException;
 import az.et.ws.component.mapper.ObjectMapper;
 import az.et.ws.component.model.AppUser;
 import az.et.ws.component.request.LoginRequest;
@@ -45,16 +45,15 @@ public class AuthService implements UserDetailsService {
     }
 
     public AppUser registration(RegistrationRequest request, AuthenticationProvider authenticationProvider) {
-        if (emailAlreadyExists(request.getEmail())) {
-            throw new UserAlreadyExists(request.getEmail());
-        } else {
-            AppRoleEntity appRole = appRoleRepository.findByName("USER");
-            return objectMapper.generateAppUser(appUserRepository.save(objectMapper.createNewUser(request, authenticationProvider, appRole)));
-        }
+        checkEmailAlreadyIsExists(request.getEmail());
+        AppRoleEntity appRole = appRoleRepository.findByName("USER");
+        return objectMapper.generateAppUser(appUserRepository.save(objectMapper.createNewUser(request, authenticationProvider, appRole)));
     }
 
-    private Boolean emailAlreadyExists(String email) {
-        return appUserRepository.existsByEmail(email);
+    public void checkEmailAlreadyIsExists(String email) {
+        if (appUserRepository.existsByEmail(email)) {
+            throw new UserAlreadyExistsException(email);
+        }
     }
 
     /*public AuthResponse refreshToken(RefreshTokeRequest request) {
