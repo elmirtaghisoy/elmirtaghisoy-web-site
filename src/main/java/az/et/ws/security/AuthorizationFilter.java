@@ -41,7 +41,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                     TokenEntity token = jwtUtil.verifyToken(authorizationHeader);
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(
-                                    token.getUsername(), null, token.getAuthorities()
+                                    token.getEmail(), null, token.getAuthorities()
                             );
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }

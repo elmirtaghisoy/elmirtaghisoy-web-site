@@ -13,7 +13,7 @@ import java.util.Collection;
 public class AuthResponse {
     @JsonIgnore
     private Long userId;
-    private String username;
+    private String email;
     @ToString.Exclude
     private String accessToken;
     @ToString.Exclude

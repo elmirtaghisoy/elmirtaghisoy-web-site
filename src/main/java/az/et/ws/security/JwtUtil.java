@@ -35,11 +35,10 @@ public class JwtUtil {
         return jwtSecret.getBytes();
     }
 
-    public AuthResponse createTokenAndSession(Authentication authentication) {
-        AppUser appUser = (AppUser) authentication.getPrincipal();
+    public AuthResponse createTokenAndSession(AppUser appUser) {
         AuthResponse authResponse = AuthResponse.builder()
                 .userId(appUser.getId())
-                .username(appUser.getUsername())
+                .email(appUser.getUsername())
                 .accessToken(accessToken(appUser))
                 .refreshToken(refreshToken(appUser))
                 .authorities(appUser.getAuthorities())

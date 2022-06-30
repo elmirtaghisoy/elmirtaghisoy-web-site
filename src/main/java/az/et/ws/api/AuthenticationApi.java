@@ -8,10 +8,13 @@ import az.et.ws.component.response.AuthResponse;
 import az.et.ws.component.response.SuccessResponse;
 import az.et.ws.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotBlank;
@@ -50,5 +53,12 @@ public class AuthenticationApi {
     public SuccessResponse<AuthResponse> refreshToken(@RequestBody RefreshTokeRequest request) {
         return SuccessResponse.update(appUserService.refreshToken(request));
     }*/
+
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/ping")
+    public SuccessResponse<String> ping() {
+        return SuccessResponse.fetch("Service is work");
+    }
 
 }

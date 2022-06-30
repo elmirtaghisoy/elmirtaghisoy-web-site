@@ -1,7 +1,6 @@
 package az.et.ws.service;
 
-import az.et.ws.component.model.GoogleUser;
-import az.et.ws.repository.postgres.AppUserRepository;
+import az.et.ws.component.model.GoogleUserInfo;
 import lombok.AllArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -16,7 +15,7 @@ public class COAuth2Service extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User user = super.loadUser(userRequest);
-        return new GoogleUser(user);
+        return new GoogleUserInfo(user);
     }
 
 }

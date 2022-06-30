@@ -35,8 +35,8 @@ public class TokenEntity implements Serializable {
     @Column(name = "refresh_token")
     private String refreshToken;
 
-    @Column(name = "username")
-    private String username;
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "authorities")
     private Collection<GrantedAuthority> authorities;

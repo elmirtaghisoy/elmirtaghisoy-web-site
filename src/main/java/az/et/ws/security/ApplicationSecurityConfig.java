@@ -1,5 +1,7 @@
 package az.et.ws.security;
 
+import az.et.ws.component.mapper.ObjectMapper;
+import az.et.ws.repository.postgres.AppUserRepository;
 import az.et.ws.service.COAuth2Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +27,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtUtil jwtUtil;
     private final COAuth2Service coAuth2Service;
 
+    private final AppUserRepository appUserRepository;
+    private final ObjectMapper objectMapper;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
@@ -40,7 +45,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .userInfoEndpoint()
                 .userService(coAuth2Service)
                 .and()
-                .successHandler(new OAuth2SuccessHandler());
+                .successHandler(new OAuth2SuccessHandler(jwtUtil,appUserRepository,objectMapper));
     }
 
     @Bean

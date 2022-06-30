@@ -14,12 +14,11 @@ import java.util.Collection;
 public class AppUser extends User {
 
     private final Long id;
-    private final String firstName;
-    private final String lastName;
-    private final String email;
+    private final String name;
+    private final String surname;
 
     public AppUser(
-            String username,
+            String email,
             String password,
             boolean enabled,
             boolean accountNonExpired,
@@ -27,14 +26,12 @@ public class AppUser extends User {
             boolean accountNonLocked,
             Collection<? extends GrantedAuthority> authorities,
             Long id,
-            String firstName,
-            String lastName,
-            String email
+            String name,
+            String surname
     ) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+        super(email, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+        this.name = name;
+        this.surname = surname;
     }
 }

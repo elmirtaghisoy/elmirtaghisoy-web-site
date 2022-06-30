@@ -26,18 +26,17 @@ public abstract class ObjectMapper {
     public abstract PostResponse e2r(PostEntity entity);
 
     public AppUser generateAppUser(AppUserEntity entity) {
-        return new AppUser(entity.getUsername(), entity.getPassword(), entity.isEnabled(), entity.isAccountNonExpired(), entity.isCredentialsNonExpired(), entity.isAccountNonLocked(), getAuthorities(entity), entity.getId(), entity.getFirstName(), entity.getLastName(), entity.getEmail());
+        return new AppUser(entity.getEmail(), entity.getPassword(), entity.isEnabled(), entity.isAccountNonExpired(), entity.isCredentialsNonExpired(), entity.isAccountNonLocked(), getAuthorities(entity), entity.getId(), entity.getName(), entity.getSurname());
     }
 
     public TokenEntity authResponseToCache(AuthResponse authResponse) {
-        return new TokenEntity(authResponse.getAccessToken(), authResponse.getRefreshToken(), authResponse.getUsername(), authResponse.getAuthorities());
+        return new TokenEntity(authResponse.getAccessToken(), authResponse.getRefreshToken(), authResponse.getEmail(), authResponse.getAuthorities());
     }
 
     public AppUserEntity createNewUser(RegistrationRequest request, AuthenticationProvider authenticationProvider, AppRoleEntity appRole) {
         AppUserEntity newUser = new AppUserEntity();
-        newUser.setUsername(request.getUsername());
-        newUser.setFirstName(request.getFirstName());
-        newUser.setLastName(request.getLastName());
+        newUser.setName(request.getFirstName());
+        newUser.setSurname(request.getLastName());
         newUser.setPassword(new BCryptPasswordEncoder(8).encode(request.getPassword()));
         newUser.setEmail(request.getEmail());
 //        newUser.setAuthProvider(request.getAuthProvider());

@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Map;
 
 @AllArgsConstructor
-public class GoogleUser implements OAuth2User {
+public class GoogleUserInfo implements OAuth2User {
 
     private OAuth2User oAuth2User;
 

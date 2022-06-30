@@ -30,14 +30,15 @@ public class AuthService implements UserDetailsService {
     private final AppRoleRepository appRoleRepository;
 
     @Override
-    public AppUser loadUserByUsername(String username) {
-        return objectMapper.generateAppUser(appUserRepository.findByUsername(username));
+    public AppUser loadUserByUsername(String email) {
+        return objectMapper.generateAppUser(appUserRepository.findByEmail(email));
     }
 
     public AuthResponse login(LoginRequest loginRequest) {
-        UsernamePasswordAuthenticationToken credential = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
+        UsernamePasswordAuthenticationToken credential = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
         Authentication authentication = authenticationManager.authenticate(credential);
-        return jwtUtil.createTokenAndSession(authentication);
+        AppUser appUser = (AppUser) authentication.getPrincipal();
+        return jwtUtil.createTokenAndSession(appUser);
     }
 
     public void logout(String bearerToken) {

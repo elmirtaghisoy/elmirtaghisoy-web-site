@@ -6,8 +6,6 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,7 +30,9 @@ public class AppUserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "user.field.username")
+
+//    delete this column
+//    @NotBlank(message = "user.field.username")
     @Column(name = "username")
     private String username;
 
@@ -46,11 +46,11 @@ public class AppUserEntity {
 
     @NotBlank(message = "user.field.firstName")
     @Column(name = "first_name")
-    private String firstName;
+    private String name;
 
     @NotBlank(message = "user.field.lastName")
     @Column(name = "last_name")
-    private String lastName;
+    private String surname;
 
     @NotNull
     @Column(name = "enabled")
