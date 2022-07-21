@@ -45,7 +45,10 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .userInfoEndpoint()
                 .userService(coAuth2Service)
                 .and()
-                .successHandler(new OAuth2SuccessHandler(jwtUtil,appUserRepository,objectMapper));
+                .successHandler(new OAuth2SuccessHandler(jwtUtil, appUserRepository, objectMapper));
+
+        // todo login olmadiqda istenilen url google logine yönlendirilir.
+
     }
 
     @Bean

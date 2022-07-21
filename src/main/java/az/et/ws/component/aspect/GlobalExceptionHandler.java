@@ -55,8 +55,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ErrorResponse<String> accessDeniedException(AccessDeniedException exception) {
-        return ErrorResponse.error(ACCESS_DENIED, ExceptionUtils.getStackTrace(exception));
+    public ErrorResponse<String> accessDeniedException() {
+        return ErrorResponse.error(ACCESS_DENIED);
     }
 
     @ExceptionHandler(InvalidTokenException.class)

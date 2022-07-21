@@ -46,14 +46,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             response.getWriter().write(json);
             response.setStatus(200);
         }
-
-/*
-TODO
-    eger istifadeci movcuddursa birbasha login olsun (yeni token yaradib return etsin)
-    eks halda qeydiyyat sehifesine datalar ile birlikde yonlendirilsin
-*/
-
-
     }
 
 }

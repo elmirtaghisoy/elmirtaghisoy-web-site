@@ -9,6 +9,7 @@ public interface SecurityConstraints {
             "/logout/**",
             "/login/**",
             "/registration/**",
+            "/oauth2/authorize-client",
             "/ping/**"
     );
 
