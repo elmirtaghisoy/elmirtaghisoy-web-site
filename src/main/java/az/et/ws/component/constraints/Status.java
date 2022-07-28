@@ -24,6 +24,8 @@ public enum Status {
     EXPIRED_TOKEN(1011, "standard.expired-token"),
     USER_ALREADY_EXISTS(1012, "standard.user-already-exists"),
     WRONG_AUTH_PROVIDER(1013, "standard.wrong-auth-provider"),
+
+    EVENT_NOT_ACCEPTABLE(1013, "standard.event-not-acceptable"),
     UNKNOWN_ERROR(2000, "standard.unknown-error");
 
     private final int code;

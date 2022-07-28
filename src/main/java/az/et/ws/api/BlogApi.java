@@ -29,21 +29,48 @@ public class BlogApi {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/blog/create")
     @PreAuthorize("hasAnyAuthority('ALL','BLOG','CREATE')")
-    public SuccessResponse<PostResponse> createTraining(@RequestBody PostRequest request) {
+    public SuccessResponse<PostResponse> createBlog(@RequestBody PostRequest request) {
         return SuccessResponse.create(blogService.createBlog(request));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/blog/review/{id}")
+    @PreAuthorize("hasAnyAuthority('ALL','BLOG','REVIEW')")
+    public SuccessResponse<PostResponse> getBlogForReview(
+            @PathVariable("id") Long id
+    ) {
+        return SuccessResponse.fetch(blogService.getBlogForReview(id));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/blog/approve/{id}")
+    @PreAuthorize("hasAnyAuthority('ALL','BLOG','APPROVE')")
+    public SuccessResponse<PostResponse> approveBlog(
+            @PathVariable("id") Long id
+    ) throws Exception {
+        return SuccessResponse.fetch(blogService.approveBlog(id));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/blog/comment/{id}")
+    @PreAuthorize("hasAnyAuthority('ALL','BLOG','COMMENT')")
+    public SuccessResponse<PostResponse> commentBlog(
+            @PathVariable("id") Long id
+    ) {
+        return SuccessResponse.fetch(blogService.commentBlog(id));
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/blog/all")
     @PreAuthorize("hasAnyAuthority('ALL','BLOG','GET')")
-    public SuccessResponse<List<PostResponse>> getAllTraining() {
+    public SuccessResponse<List<PostResponse>> getAllBlog() {
         return SuccessResponse.fetch(blogService.getAllBlog());
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/blog/{id}")
     @PreAuthorize("hasAnyAuthority('ALL','BLOG','GET')")
-    public SuccessResponse<PostResponse> getTrainingById(@PathVariable("id") Long blogId) {
+    public SuccessResponse<PostResponse> getBlogById(@PathVariable("id") Long blogId) {
         return SuccessResponse.fetch(blogService.getBlogById(blogId));
     }
 

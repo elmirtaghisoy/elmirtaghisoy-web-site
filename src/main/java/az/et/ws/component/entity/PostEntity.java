@@ -1,10 +1,13 @@
 package az.et.ws.component.entity;
 
+import az.et.ws.component.statemachine.blog.BlogState;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,5 +32,9 @@ public class PostEntity extends Auditable {
     @NotBlank(message = "training.field.context")
     @Column(name = "content")
     private String content;
+
+    @Column(name = "state")
+    @Enumerated(EnumType.STRING)
+    private BlogState state;
 
 }

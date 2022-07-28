@@ -6,7 +6,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
 
   redis:
     client-name: JEDIS
@@ -24,7 +24,6 @@ spring:
             scope:
               - email
               - profile
-
 
 server:
   port: 8081
