@@ -36,7 +36,12 @@ public class BlogStateMachineConfig extends EnumStateMachineConfigurerAdapter<Bl
                 .withExternal()
                 .source(BlogState.IN_REVIEW)
                 .target(BlogState.COMMENTED)
-                .event(BlogEvent.COMMENT);
+                .event(BlogEvent.COMMENT)
+                .and()
+                .withExternal()
+                .source(BlogState.COMMENTED)
+                .target(BlogState.IN_REVIEW)
+                .event(BlogEvent.GET_FOR_REVIEW);
     }
 
 }
