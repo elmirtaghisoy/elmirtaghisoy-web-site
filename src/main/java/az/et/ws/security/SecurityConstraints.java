@@ -10,7 +10,8 @@ public interface SecurityConstraints {
             "/login/**",
             "/registration/**",
             "/oauth2/authorize-client",
-            "/ping/**"
+            "/ping/**",
+            "/login/qr"
     );
 
     static boolean pathIsWhiteListed(String path) {

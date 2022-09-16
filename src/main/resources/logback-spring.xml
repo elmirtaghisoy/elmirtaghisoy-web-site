@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-<!--    <property scope="context" name="LOG_PATH" value="/var/logs/et-website"/>-->
-<!--    <include resource="logback/appender-console.xml"/>-->
-<!--&lt;!&ndash;    <include resource="logback/appender-file.xml"/>&ndash;&gt;-->
-<!--&lt;!&ndash;    <springProperty scope="context" name="application_name" source="spring.application.name"/>&ndash;&gt;-->
-        <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <!--    <property scope="context" name="LOG_PATH" value="/var/logs/et-website"/>-->
+    <include resource="logback/appender-console.xml"/>
+    <!--    <include resource="logback/appender-file.xml"/>-->
+    <!--    <springProperty scope="context" name="application_name" source="spring.application.name"/>-->
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-<!--    <springProfile name="local">-->
-<!--        <root level="info">-->
-<!--&lt;!&ndash;            <appender-ref ref="APPENDER-CONSOLE"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <appender-ref ref="APPENDER-FILE"/>&ndash;&gt;-->
-<!--        </root>-->
-<!--    </springProfile>-->
+    <springProfile name="local">
+        <root level="info">
+            <appender-ref ref="APPENDER-CONSOLE"/>
+            <!--            <appender-ref ref="APPENDER-FILE"/>-->
+        </root>
+    </springProfile>
 
-<!--    <springProfile name="develop">-->
-<!--        <root level="info">-->
-<!--            <appender-ref ref="APPENDER-CONSOLE"/>-->
-<!--            <appender-ref ref="APPENDER-FILE"/>-->
-<!--        </root>-->
-<!--    </springProfile>-->
+    <!--    <springProfile name="develop">-->
+    <!--        <root level="info">-->
+    <!--            <appender-ref ref="APPENDER-CONSOLE"/>-->
+    <!--            <appender-ref ref="APPENDER-FILE"/>-->
+    <!--        </root>-->
+    <!--    </springProfile>-->
 
-<!--    <springProfile name="master">-->
-<!--        <root level="info">-->
-<!--            <appender-ref ref="APPENDER-CONSOLE"/>-->
-<!--            <appender-ref ref="APPENDER-FILE"/>-->
-<!--        </root>-->
-<!--    </springProfile>-->
+    <!--    <springProfile name="master">-->
+    <!--        <root level="info">-->
+    <!--            <appender-ref ref="APPENDER-CONSOLE"/>-->
+    <!--            <appender-ref ref="APPENDER-FILE"/>-->
+    <!--        </root>-->
+    <!--    </springProfile>-->
 
 </configuration>

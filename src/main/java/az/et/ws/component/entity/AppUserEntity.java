@@ -31,7 +31,7 @@ public class AppUserEntity {
     private Long id;
 
 
-//    delete this column
+    //    delete this column
 //    @NotBlank(message = "user.field.username")
     @Column(name = "username")
     private String username;
@@ -71,6 +71,12 @@ public class AppUserEntity {
 //    @Enumerated(EnumType.STRING)
 //    @Column(name = "auth_provider")
 //    private AuthenticationProvider authProvider;
+
+    @Column(name = "google_secret_key")
+    private String googleSecretKey;
+
+    @Column(name = "google_validation_code")
+    private Integer googleValidationCode;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

@@ -1,5 +1,6 @@
 package az.et.ws.component.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -12,14 +13,16 @@ public class GoogleUserInfo implements OAuth2User {
 
     private OAuth2User oAuth2User;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Override
     public Map<String, Object> getAttributes() {
-        return oAuth2User.getAttributes();
+        return null;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return oAuth2User.getAuthorities();
+        return null;
     }
 
     @Override

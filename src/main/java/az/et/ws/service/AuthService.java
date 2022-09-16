@@ -5,7 +5,7 @@ import az.et.ws.component.entity.AuthenticationProvider;
 import az.et.ws.component.exception.UserAlreadyExistsException;
 import az.et.ws.component.mapper.ObjectMapper;
 import az.et.ws.component.model.AppUser;
-import az.et.ws.component.request.LoginRequest;
+import az.et.ws.component.request.BasicLoginRequest;
 import az.et.ws.component.request.RegistrationRequest;
 import az.et.ws.component.response.AuthResponse;
 import az.et.ws.repository.postgres.AppRoleRepository;
@@ -26,7 +26,6 @@ public class AuthService implements UserDetailsService {
     private final ObjectMapper objectMapper;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
-
     private final AppRoleRepository appRoleRepository;
 
     @Override
@@ -34,8 +33,8 @@ public class AuthService implements UserDetailsService {
         return objectMapper.generateAppUser(appUserRepository.findByEmail(email));
     }
 
-    public AuthResponse login(LoginRequest loginRequest) {
-        UsernamePasswordAuthenticationToken credential = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
+    public AuthResponse login(BasicLoginRequest basicLoginRequest) {
+        UsernamePasswordAuthenticationToken credential = new UsernamePasswordAuthenticationToken(basicLoginRequest.getEmail(), basicLoginRequest.getPassword());
         Authentication authentication = authenticationManager.authenticate(credential);
         AppUser appUser = (AppUser) authentication.getPrincipal();
         return jwtUtil.createTokenAndSession(appUser);
