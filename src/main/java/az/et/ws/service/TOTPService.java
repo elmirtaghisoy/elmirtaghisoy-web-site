@@ -1,6 +1,6 @@
 package az.et.ws.service;
 
-import az.et.ws.component.entity.AppUserEntity;
+import az.et.ws.component.exception.WrongOTPCodeException;
 import az.et.ws.component.mapper.ObjectMapper;
 import az.et.ws.component.model.AppUser;
 import az.et.ws.component.request.QRLoginRequest;
@@ -52,7 +52,8 @@ public class TOTPService {
         if (googleAuthenticator.authorizeUser(qrLoginRequest.getEmail(), qrLoginRequest.getGoogleCode())) {
             AppUser appUser = objectMapper.generateAppUser(appUserRepository.findByEmail(qrLoginRequest.getEmail()));
             return jwtUtil.createTokenAndSession(appUser);
+        } else {
+            throw new WrongOTPCodeException();
         }
-        return null;
     }
 }

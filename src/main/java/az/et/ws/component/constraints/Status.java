@@ -26,6 +26,7 @@ public enum Status {
     WRONG_AUTH_PROVIDER(1013, "standard.wrong-auth-provider"),
 
     EVENT_NOT_ACCEPTABLE(1013, "standard.event-not-acceptable"),
+    WRONG_OTP_CODE(1014, "standard.wrong-otp-code"),
     UNKNOWN_ERROR(2000, "standard.unknown-error");
 
     private final int code;

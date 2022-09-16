@@ -4,6 +4,7 @@ package az.et.ws.component.aspect;
 import az.et.ws.component.exception.EventNotAcceptableException;
 import az.et.ws.component.exception.InvalidTokenException;
 import az.et.ws.component.exception.UserAlreadyExistsException;
+import az.et.ws.component.exception.WrongOTPCodeException;
 import az.et.ws.component.model.ValidationError;
 import az.et.ws.component.response.ErrorResponse;
 import az.et.ws.util.Translator;
@@ -32,6 +33,7 @@ import static az.et.ws.component.constraints.Status.UNKNOWN_ERROR;
 import static az.et.ws.component.constraints.Status.USER_ALREADY_EXISTS;
 import static az.et.ws.component.constraints.Status.VALIDATION_ERROR;
 import static az.et.ws.component.constraints.Status.WRONG_AUTH_PROVIDER;
+import static az.et.ws.component.constraints.Status.WRONG_OTP_CODE;
 import static az.et.ws.component.constraints.Status.WRONG_USERNAME_OR_PASSWORD;
 
 @RestControllerAdvice
@@ -91,6 +93,11 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public ErrorResponse<String> eventNotAcceptableException() {
         return ErrorResponse.error(EVENT_NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler(WrongOTPCodeException.class)
+    public ErrorResponse<String> wrongOtpCodeException() {
+        return ErrorResponse.error(WRONG_OTP_CODE);
     }
 
     @ExceptionHandler(Throwable.class)
