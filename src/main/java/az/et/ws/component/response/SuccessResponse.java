@@ -7,10 +7,11 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class SuccessResponse<R> {
+public class SuccessResponse<R> implements Serializable {
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private R response;

@@ -10,6 +10,8 @@ import az.et.ws.component.statemachine.blog.BlogState;
 import az.et.ws.component.statemachine.blog.BlogStateChangeInterceptor;
 import az.et.ws.repository.postgres.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.statemachine.StateMachine;
@@ -54,6 +56,7 @@ public class BlogService {
         return getBlogById(id);
     }
 
+    @Cacheable("BlogListCache")
     public List<PostResponse> getAllBlog() {
         return postRepository
                 .findAll()

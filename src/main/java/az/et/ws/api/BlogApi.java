@@ -47,7 +47,7 @@ public class BlogApi {
     @PreAuthorize("hasAnyAuthority('ALL','BLOG','APPROVE')")
     public SuccessResponse<PostResponse> approveBlog(
             @PathVariable("id") Long id
-    ) throws Exception {
+    ) {
         return SuccessResponse.fetch(blogService.approveBlog(id));
     }
 
