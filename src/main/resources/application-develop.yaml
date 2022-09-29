@@ -5,11 +5,34 @@ spring:
     password: user_et
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   redis:
     client-name: JEDIS
     host: redis
     port: 6379
     timeout: 3000
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: "538981183295-d6g8ir58b4b0tqedouikd2lb726pmbd7.apps.googleusercontent.com"
+            client-secret: "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"
+            scope:
+              - email
+              - profile
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
 server:
   port: 8081

@@ -44,31 +44,47 @@ services:
       collect_logs_with_filebeat: "true"
       decode_log_event_to_json_object: "true"
 
-  elasticsearch:
-    container_name: elasticsearch
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2-amd64
+  zookeeper:
+    container_name: et-website_zk
+    image: wurstmeister/zookeeper
     ports:
-      - 9200:9200
+      - "2181:2181"
+
+  kafka:
+    container_name: et-website_kafka
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
     environment:
-      discovery.type: single-node
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
 
-  kibana:
-    container_name: kibana
-    image: docker.elastic.co/kibana/kibana:7.9.2
-    ports:
-      - 5601:5601
-    depends_on:
-      - elasticsearch
-
-  filebeat:
-    image: docker.elastic.co/beats/filebeat:7.7.0
-    volumes:
-      - ./filebeat/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    user: root
-    command: [ "--strict.perms=false" ]
-    restart: on-failure
+#  elasticsearch:
+#    container_name: elasticsearch
+#    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2-amd64
+#    ports:
+#      - 9200:9200
+#    environment:
+#      discovery.type: single-node
+#
+#  kibana:
+#    container_name: kibana
+#    image: docker.elastic.co/kibana/kibana:7.9.2
+#    ports:
+#      - 5601:5601
+#    depends_on:
+#      - elasticsearch
+#
+#  filebeat:
+#    image: docker.elastic.co/beats/filebeat:7.7.0
+#    volumes:
+#      - ./filebeat/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+#      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+#      - /var/run/docker.sock:/var/run/docker.sock:ro
+#    user: root
+#    command: [ "--strict.perms=false" ]
+#    restart: on-failure
 
   #jenkins
   #vault

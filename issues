@@ -1,5 +1,14 @@
-        // blogu redisde save ele
-        // statei deyish
-        // ve admine notification gonderki filankes blog yaratdi
-        // admin approve etse bazada save olsun
-        // admin reject etse istifadeciye notification gelsin
+1. Actions topic yaradacagiq.
+2. Her userId ye gore partition yaradacagiq.
+
+Producer spring boot'da olacaqdir ve actionlari kafkaya publish edecekdir.
+Consumer ise JS de olacaqdir ve userId'ye gore actionlari listen edecekdir.
+
+
+
+
+1. Run application with docker +
+2. config kafka in docker +
+3. create topic in kafka with spring boot
+4. produce data to kafka with spring boot
+5. consume data from kafka with js

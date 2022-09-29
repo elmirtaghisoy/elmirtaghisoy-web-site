@@ -1,0 +1,8 @@
+insert into etwebsite.app_role VALUES(1,true,'ADMIN');
+insert into etwebsite.app_role VALUES(2,true,'USER');
+
+insert into etwebsite.app_permission VALUES(1,true,'ALL');
+
+insert into etwebsite.roles_permissions VALUES(1,1);
+insert into etwebsite.roles_permissions VALUES(2,1);
+
