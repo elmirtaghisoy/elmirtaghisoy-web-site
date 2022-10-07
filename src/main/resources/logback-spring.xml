@@ -9,7 +9,7 @@
 
     <springProfile name="local">
         <root level="info">
-            <appender-ref ref="APPENDER-CONSOLE"/>
+<!--            <appender-ref ref="APPENDER-CONSOLE"/>-->
             <!--            <appender-ref ref="APPENDER-FILE"/>-->
         </root>
     </springProfile>

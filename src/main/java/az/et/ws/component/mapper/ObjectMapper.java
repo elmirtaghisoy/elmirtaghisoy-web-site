@@ -8,6 +8,7 @@ import az.et.ws.component.entity.TokenEntity;
 import az.et.ws.component.model.AppUser;
 import az.et.ws.component.request.PostRequest;
 import az.et.ws.component.request.RegistrationRequest;
+import az.et.ws.component.response.AppUserResponse;
 import az.et.ws.component.response.AuthResponse;
 import az.et.ws.component.response.PostResponse;
 import org.mapstruct.Mapper;
@@ -24,6 +25,8 @@ public abstract class ObjectMapper {
     public abstract PostEntity r2e(PostRequest request);
 
     public abstract PostResponse e2r(PostEntity entity);
+
+    public abstract AppUserResponse e2r(AppUserEntity entity);
 
     public AppUser generateAppUser(AppUserEntity entity) {
         return new AppUser(entity.getEmail(), entity.getPassword(), entity.isEnabled(), entity.isAccountNonExpired(), entity.isCredentialsNonExpired(), entity.isAccountNonLocked(), getAuthorities(entity), entity.getId(), entity.getName(), entity.getSurname());

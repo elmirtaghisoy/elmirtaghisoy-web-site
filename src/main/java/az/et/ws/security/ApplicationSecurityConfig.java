@@ -14,6 +14,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.List;
 
 import static az.et.ws.security.SecurityConstraints.WHITE_LIST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -49,6 +53,22 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // todo login olmadiqda istenilen url google logine yönlendirilir.
 
+        http.cors(cors -> {
+            CorsConfigurationSource cs = resources -> {
+                CorsConfiguration corsConfiguration = new CorsConfiguration();
+                corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000","http://localhost:3001"));
+                corsConfiguration.setAllowedMethods(List.of("POST", "GET", "PUT", "DELETE", "OPTIONS"));
+                corsConfiguration.setAllowedHeaders(List.of("Authorization",
+                        "Content-Type",
+                        "X-Requested-With",
+                        "Accept",
+                        "X-XSRF-TOKEN"));
+                corsConfiguration.setAllowCredentials(true);
+                return corsConfiguration;
+            };
+
+            cors.configurationSource(cs);
+        });
     }
 
     @Bean

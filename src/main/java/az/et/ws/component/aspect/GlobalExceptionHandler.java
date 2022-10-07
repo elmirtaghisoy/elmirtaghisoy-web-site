@@ -73,6 +73,7 @@ public class GlobalExceptionHandler {
             BadCredentialsException.class,
             InternalAuthenticationServiceException.class
     })
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse<String> badCredentialsException() {
         return ErrorResponse.error(WRONG_USERNAME_OR_PASSWORD);
     }

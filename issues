@@ -9,6 +9,12 @@ Consumer ise JS de olacaqdir ve userId'ye gore actionlari listen edecekdir.
 
 1. Run application with docker +
 2. config kafka in docker +
-3. create topic in kafka with spring boot
-4. produce data to kafka with spring boot
-5. consume data from kafka with js
+3. create topic in kafka with spring boot +
+4. produce data to kafka with spring boot +
+5. consume data from kafka with js +
+
+
+
+
+
+
