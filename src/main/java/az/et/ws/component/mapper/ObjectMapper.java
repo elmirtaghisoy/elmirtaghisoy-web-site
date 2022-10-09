@@ -11,6 +11,7 @@ import az.et.ws.component.request.RegistrationRequest;
 import az.et.ws.component.response.AppUserResponse;
 import az.et.ws.component.response.AuthResponse;
 import az.et.ws.component.response.PostResponse;
+import az.et.ws.component.views.AppUserView;
 import org.mapstruct.Mapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,7 +27,7 @@ public abstract class ObjectMapper {
 
     public abstract PostResponse e2r(PostEntity entity);
 
-    public abstract AppUserResponse e2r(AppUserEntity entity);
+    public abstract AppUserResponse v2r(AppUserView view);
 
     public AppUser generateAppUser(AppUserEntity entity) {
         return new AppUser(entity.getEmail(), entity.getPassword(), entity.isEnabled(), entity.isAccountNonExpired(), entity.isCredentialsNonExpired(), entity.isAccountNonLocked(), getAuthorities(entity), entity.getId(), entity.getName(), entity.getSurname());
