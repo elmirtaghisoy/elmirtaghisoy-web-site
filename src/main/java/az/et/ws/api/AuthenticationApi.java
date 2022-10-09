@@ -49,8 +49,7 @@ public class AuthenticationApi {
             @RequestBody RegistrationRequest request,
             @PathVariable AuthenticationProvider provider
     ) {
-        AppUser newUser = authService.registration(request, provider);
-        return SuccessResponse.create(newUser);
+        return SuccessResponse.create(authService.registration(request, provider));
     }
 
     /*@PostMapping("/refresh-token")

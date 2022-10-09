@@ -10,6 +10,7 @@ import org.springframework.statemachine.support.StateMachineInterceptorAdapter;
 import org.springframework.statemachine.transition.Transition;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class BlogStateChangeInterceptor extends StateMachineInterceptorAdapter<B
     public void preStateChange(State<BlogState, BlogEvent> state, Message<BlogEvent> message, Transition<BlogState, BlogEvent> transition, StateMachine<BlogState, BlogEvent> stateMachine, StateMachine<BlogState, BlogEvent> rootStateMachine) {
         Optional.ofNullable(message).ifPresent(msg -> {
             Optional.ofNullable(Long.class.cast(msg.getHeaders().getOrDefault("blog_id", -1L))).ifPresent(blogId -> {
-                PostEntity post = postRepository.getOne(blogId);
+                PostEntity post = postRepository.findById(blogId).orElseThrow(EntityNotFoundException::new);
                 post.setState(state.getId());
                 postRepository.save(post);
             });

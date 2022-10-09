@@ -10,8 +10,10 @@ import az.et.ws.component.statemachine.blog.BlogState;
 import az.et.ws.component.statemachine.blog.BlogStateChangeInterceptor;
 import az.et.ws.repository.postgres.PostRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.statemachine.StateMachine;
@@ -57,16 +59,19 @@ public class BlogService {
     }
 
     @Cacheable("BlogListCache")
-    public List<PostResponse> getAllBlog() {
-        return postRepository
-                .findAll()
+    public Page<PostResponse> getAllBlog(Pageable pageable) {
+
+        List<PostResponse> response = postRepository
+                .findAll(pageable)
                 .stream()
                 .map(objectMapper::e2r)
                 .collect(Collectors.toList());
+
+        return new PageImpl<>(response);
     }
 
     public PostResponse getBlogById(Long blogId) {
-        return objectMapper.e2r(postRepository.getById(blogId));
+        return objectMapper.e2r(postRepository.findById(blogId).orElseThrow(EntityNotFoundException::new));
     }
 
     public PostResponse updateBlog(PostRequest request) {
@@ -95,7 +100,7 @@ public class BlogService {
     }
 
     private StateMachine<BlogState, BlogEvent> build(Long blogId) {
-        PostEntity post = postRepository.getById(blogId);
+        PostEntity post = postRepository.findById(blogId).orElseThrow(EntityNotFoundException::new);
 
         StateMachine<BlogState, BlogEvent> sm = blogEventStateMachineFactory.getStateMachine(Long.toString(blogId));
 
