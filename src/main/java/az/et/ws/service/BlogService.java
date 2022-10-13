@@ -1,8 +1,10 @@
 package az.et.ws.service;
 
+import az.et.ws.component.criteria.PostSearchCriteria;
 import az.et.ws.component.entity.PostEntity;
 import az.et.ws.component.exception.EventNotAcceptableException;
 import az.et.ws.component.mapper.ObjectMapper;
+import az.et.ws.component.query.SearchQuery;
 import az.et.ws.component.request.PostRequest;
 import az.et.ws.component.response.PostResponse;
 import az.et.ws.component.statemachine.blog.BlogEvent;
@@ -59,10 +61,13 @@ public class BlogService {
     }
 
     @Cacheable("BlogListCache")
-    public Page<PostResponse> getAllBlog(Pageable pageable) {
+    public Page<PostResponse> getAllBlog(Pageable pageable, PostSearchCriteria searchCriteria) {
 
         List<PostResponse> response = postRepository
-                .findAll(pageable)
+                .findAll(
+                        SearchQuery.createPostSearchQuery(searchCriteria),
+                        pageable
+                )
                 .stream()
                 .map(objectMapper::e2r)
                 .collect(Collectors.toList());

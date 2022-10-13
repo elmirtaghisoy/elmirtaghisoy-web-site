@@ -1,5 +1,6 @@
 package az.et.ws.api;
 
+import az.et.ws.component.criteria.PostSearchCriteria;
 import az.et.ws.component.request.PostRequest;
 import az.et.ws.component.response.PostResponse;
 import az.et.ws.component.response.SuccessResponse;
@@ -66,7 +67,7 @@ public class BlogApi {
     public SuccessResponse<Page<PostResponse>> getAllBlog(
             Pageable pageable
     ) {
-        return SuccessResponse.fetch(blogService.getAllBlog(pageable));
+        return SuccessResponse.fetch(blogService.getAllBlog(pageable, new PostSearchCriteria()));
     }
 
     @ResponseStatus(HttpStatus.OK)
