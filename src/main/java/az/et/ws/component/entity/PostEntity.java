@@ -11,8 +11,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 @Table(name = "post")
@@ -36,5 +41,17 @@ public class PostEntity extends Auditable {
     @Column(name = "state")
     @Enumerated(EnumType.STRING)
     private BlogState state;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private PostCategoryEntity category;
+
+    @ManyToMany
+    @JoinTable(
+            name = "post_tag_mapping",
+            joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id")
+    )
+    private List<PostTagEntity> tags;
 
 }
