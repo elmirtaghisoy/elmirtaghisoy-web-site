@@ -61,7 +61,7 @@ public class BlogService {
     }
 
     @Cacheable("BlogListCache")
-    public Page<PostResponse> getAllBlog(Pageable pageable, PostSearchCriteria searchCriteria) {
+    public Page<PostResponse> getAllBlog(PostSearchCriteria searchCriteria, Pageable pageable) {
 
         List<PostResponse> response = postRepository
                 .findAll(

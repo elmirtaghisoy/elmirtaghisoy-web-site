@@ -2,7 +2,6 @@ package az.et.ws.component.converter;
 
 import az.et.ws.component.entity.AuthenticationProvider;
 import az.et.ws.component.exception.WrongAuthenticationTypeException;
-import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.core.convert.converter.Converter;
 
 public class StringToAuthenticationProviderConverter implements Converter<String, AuthenticationProvider> {
@@ -10,7 +9,7 @@ public class StringToAuthenticationProviderConverter implements Converter<String
     public AuthenticationProvider convert(String source) {
         try {
             return AuthenticationProvider.valueOf(source.toUpperCase());
-        } catch (ConversionFailedException e) {
+        } catch (Exception e) {
             throw new WrongAuthenticationTypeException();
         }
     }

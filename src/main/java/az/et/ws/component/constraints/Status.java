@@ -27,6 +27,7 @@ public enum Status {
 
     EVENT_NOT_ACCEPTABLE(1013, "standard.event-not-acceptable"),
     WRONG_OTP_CODE(1014, "standard.wrong-otp-code"),
+    WRONG_ENUM_TYPE(1015, "standard.wrong-enum-type"),
     UNKNOWN_ERROR(2000, "standard.unknown-error");
 
     private final int code;

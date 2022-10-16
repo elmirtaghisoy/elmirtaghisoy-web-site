@@ -4,13 +4,14 @@ package az.et.ws.component.aspect;
 import az.et.ws.component.exception.EventNotAcceptableException;
 import az.et.ws.component.exception.InvalidTokenException;
 import az.et.ws.component.exception.UserAlreadyExistsException;
+import az.et.ws.component.exception.WrongAuthenticationTypeException;
+import az.et.ws.component.exception.WrongEnumTypeException;
 import az.et.ws.component.exception.WrongOTPCodeException;
 import az.et.ws.component.model.ValidationError;
 import az.et.ws.component.response.ErrorResponse;
 import az.et.ws.util.Translator;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -33,6 +34,7 @@ import static az.et.ws.component.constraints.Status.UNKNOWN_ERROR;
 import static az.et.ws.component.constraints.Status.USER_ALREADY_EXISTS;
 import static az.et.ws.component.constraints.Status.VALIDATION_ERROR;
 import static az.et.ws.component.constraints.Status.WRONG_AUTH_PROVIDER;
+import static az.et.ws.component.constraints.Status.WRONG_ENUM_TYPE;
 import static az.et.ws.component.constraints.Status.WRONG_OTP_CODE;
 import static az.et.ws.component.constraints.Status.WRONG_USERNAME_OR_PASSWORD;
 
@@ -84,7 +86,7 @@ public class GlobalExceptionHandler {
         return ErrorResponse.error(USER_ALREADY_EXISTS, throwable.getMessage());
     }
 
-    @ExceptionHandler(ConversionFailedException.class)
+    @ExceptionHandler(WrongAuthenticationTypeException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse<String> wrongAuthenticationTypeException() {
         return ErrorResponse.error(WRONG_AUTH_PROVIDER);
@@ -101,11 +103,17 @@ public class GlobalExceptionHandler {
         return ErrorResponse.error(WRONG_OTP_CODE);
     }
 
-    @ExceptionHandler(Throwable.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse<String> unknownError(Throwable throwable) {
-        return ErrorResponse.error(UNKNOWN_ERROR, ExceptionUtils.getStackTrace(throwable));
+    @ExceptionHandler(WrongEnumTypeException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse<String> wrongEnumTypeException() {
+        return ErrorResponse.error(WRONG_ENUM_TYPE);
     }
+
+//    @ExceptionHandler(Throwable.class)
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    public ErrorResponse<String> unknownError(Throwable throwable) {
+//        return ErrorResponse.error(UNKNOWN_ERROR, ExceptionUtils.getStackTrace(throwable));
+//    }
 
 }
 

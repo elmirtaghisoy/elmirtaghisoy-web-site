@@ -4,6 +4,7 @@ import az.et.ws.component.criteria.PostSearchCriteria;
 import az.et.ws.component.request.PostRequest;
 import az.et.ws.component.response.PostResponse;
 import az.et.ws.component.response.SuccessResponse;
+import az.et.ws.component.statemachine.blog.BlogState;
 import az.et.ws.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -65,9 +67,16 @@ public class BlogApi {
     @GetMapping("/blog/all")
     @PreAuthorize("hasAnyAuthority('ALL','BLOG','GET')")
     public SuccessResponse<Page<PostResponse>> getAllBlog(
-            Pageable pageable
+            Pageable pageable,
+            @RequestParam("header") String header,
+            @RequestParam("state") BlogState state
     ) {
-        return SuccessResponse.fetch(blogService.getAllBlog(pageable, new PostSearchCriteria()));
+        return SuccessResponse.fetch(
+                blogService.getAllBlog(
+                        new PostSearchCriteria(header, state),
+                        pageable
+                )
+        );
     }
 
     @ResponseStatus(HttpStatus.OK)
