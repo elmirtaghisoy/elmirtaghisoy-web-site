@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Data
 @Component
 @AllArgsConstructor
@@ -14,4 +16,5 @@ import org.springframework.stereotype.Component;
 public class PostSearchCriteria {
     private String header;
     private BlogState state;
+    private List<Long> tagIds;
 }

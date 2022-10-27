@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
@@ -69,11 +71,12 @@ public class BlogApi {
     public SuccessResponse<Page<PostResponse>> getAllBlog(
             Pageable pageable,
             @RequestParam("header") String header,
-            @RequestParam("state") BlogState state
+            @RequestParam("state") BlogState state,
+            @RequestParam("tagIds") List<Long> tagIds
     ) {
         return SuccessResponse.fetch(
                 blogService.getAllBlog(
-                        new PostSearchCriteria(header, state),
+                        new PostSearchCriteria(header, state,tagIds),
                         pageable
                 )
         );

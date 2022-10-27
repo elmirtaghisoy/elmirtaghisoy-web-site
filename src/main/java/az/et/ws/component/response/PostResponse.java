@@ -4,6 +4,7 @@ import az.et.ws.component.statemachine.blog.BlogState;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 public class PostResponse implements Serializable {
@@ -11,4 +12,5 @@ public class PostResponse implements Serializable {
     private String header;
     private String content;
     private BlogState state;
+    private List<PostTagResponse> tags;
 }

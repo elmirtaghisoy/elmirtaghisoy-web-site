@@ -3,14 +3,19 @@ package az.et.ws.component.specification;
 import az.et.ws.component.criteria.PostSearchCriteria;
 import az.et.ws.component.entity.PostEntity;
 import az.et.ws.component.entity.PostEntity_;
+import az.et.ws.component.entity.PostTagEntity;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,6 +39,13 @@ public class PostSpecification implements Specification<PostEntity> {
             if (Objects.nonNull(criteria.getState())) {
                 predicates.add(
                         cb.equal(root.get(PostEntity_.state), criteria.getState())
+                );
+            }
+            if (!CollectionUtils.isEmpty(criteria.getTagIds())) {
+                criteriaQuery.distinct(true);
+                predicates.add(
+                        root.join(PostEntity_.TAGS).get(PostEntity_.ID).in(criteria.getTagIds())
+                        //TODO  in this case generated one extra query per post count
                 );
             }
         }
