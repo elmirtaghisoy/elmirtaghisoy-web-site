@@ -13,4 +13,5 @@ public class PostResponse implements Serializable {
     private String content;
     private BlogState state;
     private List<PostTagResponse> tags;
+    private PostCategoryResponse category;
 }

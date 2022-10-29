@@ -43,11 +43,11 @@ public class PostEntity extends Auditable {
     @Enumerated(EnumType.STRING)
     private BlogState state;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private PostCategoryEntity category;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
             name = "post_tag_mapping",
             joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),

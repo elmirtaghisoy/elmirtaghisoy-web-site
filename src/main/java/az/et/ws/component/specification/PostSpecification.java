@@ -45,7 +45,6 @@ public class PostSpecification implements Specification<PostEntity> {
                 criteriaQuery.distinct(true);
                 predicates.add(
                         root.join(PostEntity_.TAGS).get(PostEntity_.ID).in(criteria.getTagIds())
-                        //TODO  in this case generated one extra query per post count
                 );
             }
         }

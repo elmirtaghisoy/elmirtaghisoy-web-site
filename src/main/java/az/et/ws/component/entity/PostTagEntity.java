@@ -29,7 +29,7 @@ public class PostTagEntity {
     @Column(name = "tag_name")
     private String tagName;
 
-    @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "tags")
     private List<PostEntity> posts;
 
 }
