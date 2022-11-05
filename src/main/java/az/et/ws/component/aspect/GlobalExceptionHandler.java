@@ -30,7 +30,6 @@ import static az.et.ws.component.constraints.Status.ACCESS_DENIED;
 import static az.et.ws.component.constraints.Status.DATA_NOT_FOUND;
 import static az.et.ws.component.constraints.Status.EVENT_NOT_ACCEPTABLE;
 import static az.et.ws.component.constraints.Status.INVALID_TOKEN;
-import static az.et.ws.component.constraints.Status.UNKNOWN_ERROR;
 import static az.et.ws.component.constraints.Status.USER_ALREADY_EXISTS;
 import static az.et.ws.component.constraints.Status.VALIDATION_ERROR;
 import static az.et.ws.component.constraints.Status.WRONG_AUTH_PROVIDER;

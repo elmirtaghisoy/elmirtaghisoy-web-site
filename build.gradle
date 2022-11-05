@@ -26,7 +26,8 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.6.2'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.7.4'
+    implementation 'javax.validation:validation-api:2.0.1.Final'
 
     compileOnly 'org.projectlombok:lombok'
     implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.4.2.Final'
@@ -62,6 +63,8 @@ dependencies {
 
     compileOnly 'org.hibernate:hibernate-jpamodelgen'
     annotationProcessor 'org.hibernate:hibernate-jpamodelgen'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    implementation 'commons-io:commons-io:2.6'
 
 }
 

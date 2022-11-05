@@ -1,3 +1,7 @@
+app:
+  file-properties:
+    upload-path: "/home/elmirtaghisoy/ETProjects/uploads"
+
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/etwebsite
