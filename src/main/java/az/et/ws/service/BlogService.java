@@ -22,6 +22,7 @@ import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.config.StateMachineFactory;
 import org.springframework.statemachine.support.DefaultStateMachineContext;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -35,9 +36,10 @@ public class BlogService {
     private final ObjectMapper objectMapper;
     private final StateMachineFactory<BlogState, BlogEvent> blogEventStateMachineFactory;
     private final BlogStateChangeInterceptor blogStateChangeInterceptor;
-
-    public PostResponse createBlog(PostRequest request) {
+    private final FileService fileService;
+    public PostResponse createBlog(PostRequest request, List<MultipartFile> files) {
         PostEntity postEntity = objectMapper.r2e(request);
+        postEntity.setFiles(fileService.uploadFiles(files, "BLOG"));
         postEntity.setState(BlogState.WAITING_FOR_REVIEW);
         return objectMapper.e2r(postRepository.save(postEntity));
     }

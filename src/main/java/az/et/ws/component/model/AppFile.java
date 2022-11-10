@@ -6,8 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class AppFile {
-    private String category;
-    private String folder;
+    private String objectType;
     @IsValidFile
     private MultipartFile file;
 }

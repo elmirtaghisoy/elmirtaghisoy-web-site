@@ -1,9 +1,9 @@
 package az.et.ws.util;
 
 import az.et.ws.component.exception.FileNotUploaded;
-import az.et.ws.component.model.AppFile;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,19 +16,19 @@ public class FileUtil {
         return String.format("%s/%s", folderPath, fileName);
     }
 
-    public static String generateFileName(AppFile appFile) {
+    public static String generateFileName(MultipartFile file) {
         return String.format(
                 "%s.%s",
                 UUID.randomUUID(),
-                FilenameUtils.getExtension(appFile.getFile().getOriginalFilename())
+                FilenameUtils.getExtension(file.getOriginalFilename())
         );
     }
 
-    public static void createFile(AppFile appFile, String filePath) {
+    public static void createFile(MultipartFile file, String filePath) {
         try {
-            appFile.getFile().transferTo(new File(filePath));
+            file.transferTo(new File(filePath));
         } catch (IOException e) {
-            throw new FileNotUploaded(appFile.getFile().getOriginalFilename());
+            throw new FileNotUploaded(file.getOriginalFilename());
         }
     }
 

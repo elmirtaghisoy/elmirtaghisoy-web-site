@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -32,10 +34,13 @@ public class BlogApi {
     private final BlogService blogService;
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/blog/create")
+    @PostMapping(value = "/blog/create")
     @PreAuthorize("hasAnyAuthority('ALL','BLOG','CREATE')")
-    public SuccessResponse<PostResponse> createBlog(@RequestBody PostRequest request) {
-        return SuccessResponse.create(blogService.createBlog(request));
+    public SuccessResponse<PostResponse> createBlog(
+            @RequestPart(name = "request") PostRequest request,
+            @RequestPart(name = "files", required = false) List<MultipartFile> files
+    ) {
+        return SuccessResponse.create(blogService.createBlog(request, files));
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -76,7 +81,7 @@ public class BlogApi {
     ) {
         return SuccessResponse.fetch(
                 blogService.getAllBlog(
-                        new PostSearchCriteria(header, state,tagIds),
+                        new PostSearchCriteria(header, state, tagIds),
                         pageable
                 )
         );

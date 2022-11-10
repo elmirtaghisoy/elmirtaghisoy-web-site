@@ -1,7 +1,10 @@
 package az.et.ws.component.entity;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -17,6 +20,9 @@ import javax.persistence.Table;
 @ToString
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class FileEntity extends Auditable {
 
     @Id
@@ -33,7 +39,13 @@ public class FileEntity extends Auditable {
     @Column(name = "category")
     private String category;
 
-    @Column(name = "ref_object_id")
-    private Long refObjectId;
+    @Column(name = "file_name")
+    private String fileName;
+
+    @Column(name = "object_id")
+    private Long objectId;
+
+    @Column(name = "content_type")
+    private String contentType;
 
 }
