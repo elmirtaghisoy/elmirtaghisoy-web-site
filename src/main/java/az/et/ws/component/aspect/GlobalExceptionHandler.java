@@ -3,6 +3,7 @@ package az.et.ws.component.aspect;
 
 import az.et.ws.component.exception.EventNotAcceptableException;
 import az.et.ws.component.exception.InvalidTokenException;
+import az.et.ws.component.exception.UndefinedFileTypeException;
 import az.et.ws.component.exception.UserAlreadyExistsException;
 import az.et.ws.component.exception.WrongAuthenticationTypeException;
 import az.et.ws.component.exception.WrongEnumTypeException;
@@ -30,6 +31,7 @@ import static az.et.ws.component.constraints.Status.ACCESS_DENIED;
 import static az.et.ws.component.constraints.Status.DATA_NOT_FOUND;
 import static az.et.ws.component.constraints.Status.EVENT_NOT_ACCEPTABLE;
 import static az.et.ws.component.constraints.Status.INVALID_TOKEN;
+import static az.et.ws.component.constraints.Status.UNDEFINED_FILE_TYPE;
 import static az.et.ws.component.constraints.Status.USER_ALREADY_EXISTS;
 import static az.et.ws.component.constraints.Status.VALIDATION_ERROR;
 import static az.et.ws.component.constraints.Status.WRONG_AUTH_PROVIDER;
@@ -106,6 +108,12 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse<String> wrongEnumTypeException() {
         return ErrorResponse.error(WRONG_ENUM_TYPE);
+    }
+
+    @ExceptionHandler(UndefinedFileTypeException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse<String> undefinedFileTypeException() {
+        return ErrorResponse.error(UNDEFINED_FILE_TYPE);
     }
 
 //    @ExceptionHandler(Throwable.class)

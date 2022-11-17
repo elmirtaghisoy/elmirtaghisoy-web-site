@@ -7,6 +7,7 @@ import az.et.ws.component.response.SuccessResponse;
 import az.et.ws.component.statemachine.blog.BlogState;
 import az.et.ws.service.BlogService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -104,7 +105,7 @@ public class BlogApi {
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/blog/{id}/delete")
     @PreAuthorize("hasAnyAuthority('BLOG','DELETE')")
-    public SuccessResponse<PostResponse> deleteBlogById(@PathVariable("id") Long blogId) {
+    public SuccessResponse<ObjectUtils.Null> deleteBlogById(@PathVariable("id") Long blogId) {
         blogService.deleteBlogById(blogId);
         return SuccessResponse.delete();
     }
