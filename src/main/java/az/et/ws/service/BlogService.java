@@ -3,6 +3,8 @@ package az.et.ws.service;
 import az.et.ws.component.criteria.PostSearchCriteria;
 import az.et.ws.component.entity.PostEntity;
 import az.et.ws.component.exception.EventNotAcceptableException;
+import az.et.ws.component.filegenerator.CustomByteArrayResource;
+import az.et.ws.component.filegenerator.PdfGenerator;
 import az.et.ws.component.mapper.ObjectMapper;
 import az.et.ws.component.query.SearchQuery;
 import az.et.ws.component.request.PostRequest;
@@ -11,6 +13,8 @@ import az.et.ws.component.statemachine.blog.BlogEvent;
 import az.et.ws.component.statemachine.blog.BlogState;
 import az.et.ws.component.statemachine.blog.BlogStateChangeInterceptor;
 import az.et.ws.repository.postgres.PostRepository;
+import com.itextpdf.html2pdf.HtmlConverter;
+import com.itextpdf.io.source.ByteArrayOutputStream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -37,6 +41,8 @@ public class BlogService {
     private final StateMachineFactory<BlogState, BlogEvent> blogEventStateMachineFactory;
     private final BlogStateChangeInterceptor blogStateChangeInterceptor;
     private final FileService fileService;
+    private final PdfGenerator pdfGenerator;
+
     public PostResponse createBlog(PostRequest request, List<MultipartFile> files) {
         PostEntity postEntity = objectMapper.r2e(request);
         postEntity.setFiles(fileService.uploadFiles(files, "BLOG"));
@@ -124,4 +130,13 @@ public class BlogService {
         return sm;
     }
 
+    public CustomByteArrayResource generateBlogPdfById(Long blogId) {
+        PostResponse post = getBlogById(blogId);
+        String htmlString = pdfGenerator.generateBlogPdf(post);
+
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        HtmlConverter.convertToPdf(htmlString, buffer);
+
+        return new CustomByteArrayResource(buffer.toByteArray(), post.getHeader());
+    }
 }

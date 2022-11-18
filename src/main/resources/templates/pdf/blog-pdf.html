@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1 th:text="${blog.header}"></h1>
+<p th:text="${blog.content}"></p>
+<!--<p th:text="${blog.category.categoryName}"></p>-->
+
+<div th:each="tag : ${blog.tags}">
+    <p th:text="${tag.tagName}"></p>
+</div>
+
+<div th:each="file : ${blog.files}">
+    <img height="100" width="100" th:src="${file.getFolder()+'/'+file.getFileName()}">
+    <p th:text="${file.fileName}"></p>
+</div>
+
+</body>
+</html>

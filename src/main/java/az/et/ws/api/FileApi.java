@@ -5,6 +5,7 @@ import az.et.ws.component.response.SuccessResponse;
 import az.et.ws.service.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;

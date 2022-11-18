@@ -7,6 +7,8 @@ spring:
     url: jdbc:mysql://localhost:3306/etwebsite
     username: root
     password: root
+  main:
+    banner-mode: "off"
 
   jpa:
     show-sql: true

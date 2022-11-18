@@ -1,6 +1,7 @@
 package az.et.ws.api;
 
 import az.et.ws.component.criteria.PostSearchCriteria;
+import az.et.ws.component.filegenerator.CustomByteArrayResource;
 import az.et.ws.component.request.PostRequest;
 import az.et.ws.component.response.PostResponse;
 import az.et.ws.component.response.SuccessResponse;
@@ -10,7 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -108,6 +112,17 @@ public class BlogApi {
     public SuccessResponse<ObjectUtils.Null> deleteBlogById(@PathVariable("id") Long blogId) {
         blogService.deleteBlogById(blogId);
         return SuccessResponse.delete();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/blog/{id}/generate")
+    @PreAuthorize("hasAnyAuthority('ALL','BLOG')")
+    public ResponseEntity<CustomByteArrayResource> generateBlogPdfById(@PathVariable("id") Long blogId) {
+        CustomByteArrayResource pdfFile = blogService.generateBlogPdfById(blogId);
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(MediaType.APPLICATION_PDF_VALUE))
+                .header(HttpHeaders.CONTENT_DISPOSITION, String.format("%s%s%s", "attachment; filename=\"", pdfFile.getDescription(), "\""))
+                .body(pdfFile);
     }
 
     @ResponseStatus(HttpStatus.OK)
