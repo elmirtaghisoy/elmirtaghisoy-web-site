@@ -7,9 +7,13 @@ spring:
     url: jdbc:mysql://localhost:3306/etwebsite
     username: user_et
     password: user_et
+
   jpa:
+    show-sql: false
     hibernate:
+      format_sql: false
       ddl-auto: update
+
   redis:
     client-name: JEDIS
     host: redis
