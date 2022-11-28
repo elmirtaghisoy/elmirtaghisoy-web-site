@@ -16,6 +16,7 @@ public class ActionListener {
 
     @KafkaListener(topics = "ACTION")
     public void consume(@Payload ActionInfo actionInfo) {
+        System.out.println(actionInfo.toString());
         simpMessagingTemplate.convertAndSendToUser(actionInfo.getUsername(), "/private", actionInfo);
     }
 
