@@ -13,19 +13,19 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Controller
 public class AuditorApi {
-    @Autowired
-    private SimpMessagingTemplate simpMessagingTemplate;
-
-    @MessageMapping("/message")
-    @SendTo("/chatroom/public")
-    public Message receiveMessage(@Payload Message message) {
-        return message;
-    }
-
-    @MessageMapping("/private-message")
-    public Message recMessage(@Payload Message message) {
-        simpMessagingTemplate.convertAndSendToUser(message.getReceiverName(), "/private", message);
-        System.out.println(message.toString());
-        return message;
-    }
+//    @Autowired
+//    private SimpMessagingTemplate simpMessagingTemplate;
+//
+//    @MessageMapping("/message")
+//    @SendTo("/chatroom/public")
+//    public Message receiveMessage(@Payload Message message) {
+//        return message;
+//    }
+//
+//    @MessageMapping("/private-message")
+//    public Message recMessage(@Payload Message message) {
+//        simpMessagingTemplate.convertAndSendToUser(message.getReceiverName(), "/private", message);
+//        System.out.println(message.toString());
+//        return message;
+//    }
 }

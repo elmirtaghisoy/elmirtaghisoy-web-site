@@ -85,4 +85,6 @@ public class AppUserEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private List<AppRoleEntity> roles;
+
+
 }

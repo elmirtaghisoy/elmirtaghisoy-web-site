@@ -2,8 +2,8 @@ package az.et.ws.config;
 
 import az.et.ws.component.converter.StringToAuthenticationProviderConverter;
 import az.et.ws.component.converter.StringToBlogStateConverter;
-import az.et.ws.component.interceptor.AllRequestInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
+//import az.et.ws.component.interceptor.AllRequestInterceptor;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -21,8 +21,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 //                .allowCredentials(true)
 //                .maxAge(3600);
 //    }
-    @Autowired
-    AllRequestInterceptor allRequestInterceptor;
+//    @Autowired
+//    AllRequestInterceptor allRequestInterceptor;
 
 
     @Override
@@ -31,8 +31,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addConverter(new StringToBlogStateConverter());
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(allRequestInterceptor);
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(allRequestInterceptor);
+//    }
 }

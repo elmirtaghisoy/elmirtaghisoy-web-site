@@ -6,12 +6,12 @@ services:
     depends_on:
       - redis
       - mysqldb
-      - zookeeper
-      - kafka
+#      - zookeeper
+#      - kafka
     build: ./
     links:
       - redis
-      - kafka
+#      - kafka
     env_file: ./.env
     ports:
       - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
@@ -21,24 +21,22 @@ services:
           "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE"
       }'
     volumes:
-      - /home/elmirtaghisoy/Desktop/logs:/var/logs/et-website
+      - C:\\Users\\005875\\filestorage:/home/elmirtaghisoy/ETProjects/uploads
     labels:
       collect_logs_with_filebeat: "true"
       decode_log_event_to_json_object: "true"
-
 
   mysqldb:
     container_name: et-website_db
     image: mysql:8.0.27
     env_file: ./.env
-#    command: mysqld --default-authentication-plugin=mysql_native_password
     environment:
       - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
       - MYSQL_DATABASE=$MYSQLDB_DATABASE
     ports:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
-      - /home/elmirtaghisoy/Desktop/db/mysql:/var/lib/mysql
+      - C:\\Users\\005875\\mysql:/var/lib/mysql
 
   redis:
     container_name: et-website_redis
@@ -49,33 +47,33 @@ services:
       collect_logs_with_filebeat: "true"
       decode_log_event_to_json_object: "true"
 
-  zookeeper:
-    container_name: zookeeper
-    image: wurstmeister/zookeeper
-    ports:
-      - "2181:2181"
-
-  kafka:
-    container_name: kafka
-    image: wurstmeister/kafka
-    hostname: kafka
-    restart: on-failure
-    links:
-      - zookeeper
-    ports:
-      - "9092:9092"
-    environment:
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://$HOST_IP:9092
-      KAFKA_LISTENERS: PLAINTEXT://$HOST_IP:9092
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_CREATE_TOPICS: "ACTION:1:1"
-    depends_on:
-      - zookeeper
+#  zookeeper:
+#    container_name: zookeeper
+#    image: wurstmeister/zookeeper
+#    ports:
+#      - "2181:2181"
 #
+#  kafka:
+#    container_name: kafka
+#    image: wurstmeister/kafka
+#    hostname: kafka
+#    restart: on-failure
+#    links:
+#      - zookeeper
+#    ports:
+#      - "9092:9092"
+#    environment:
+#      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://$HOST_IP:9092
+#      KAFKA_LISTENERS: PLAINTEXT://$HOST_IP:9092
+#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+#      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+#      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+#      KAFKA_CREATE_TOPICS: "ACTION:1:1"
+#    depends_on:
+#      - zookeeper
+
 #  elasticsearch:
 #    container_name: elasticsearch
 #    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2-amd64

@@ -12,7 +12,8 @@ public interface SecurityConstraints {
             "/oauth2/authorize-client",
             "/ping/**",
             "/login/qr",
-            "/ws/**"
+            "/ws/**",
+            "/api/v1/files/upload/excel" // it is temporary
     );
 
     static boolean pathIsWhiteListed(String path) {

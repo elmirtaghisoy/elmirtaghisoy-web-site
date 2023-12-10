@@ -5,7 +5,7 @@
     <include resource="logback/appender-console.xml"/>
     <include resource="logback/appender-file.xml"/>
     <springProperty scope="context" name="application_name" source="spring.application.name"/>
-<!--    <include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
     <springProfile name="local">
         <root level="info">
@@ -16,8 +16,8 @@
 
     <springProfile name="develop">
         <root level="info">
-            <appender-ref ref="APPENDER-CONSOLE"/>
-            <appender-ref ref="APPENDER-FILE"/>
+<!--            <appender-ref ref="APPENDER-CONSOLE"/>-->
+<!--            <appender-ref ref="APPENDER-FILE"/>-->
         </root>
     </springProfile>
 
